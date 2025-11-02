@@ -26,8 +26,18 @@
 
     <!-- Main Content -->
     <main id="mainContent">
-        <!-- Categories Container (populated by JavaScript) -->
-        <div id="categoriesContainer"></div>
+        <!-- Loading Skeleton (shown during initial load) -->
+        <div id="loadingSkeleton" class="loading-skeleton">
+            <div class="skeleton-grid">
+                <div class="skeleton-item skeleton"></div>
+                <div class="skeleton-item skeleton"></div>
+                <div class="skeleton-item skeleton"></div>
+                <div class="skeleton-item skeleton"></div>
+            </div>
+        </div>
+
+        <!-- Subjects Grid (populated by JavaScript) -->
+        <div id="subjectsGrid" class="subjects-grid" style="display: none;"></div>
 
         <!-- Search Results Container (hidden by default) -->
         <div id="searchResults" class="search-results" style="display: none;"></div>
