@@ -1,14 +1,18 @@
 /**
- * Study Materials Library - Main JavaScript
- * Handles all interactive functionality including:
- * - Category rendering and expand/collapse
- * - Search and filtering
- * - PDF modal viewer
- * - Event handling and user interactions
+ * Enhanced Study Materials Library - Main JavaScript
+ * Advanced animations, particle effects, and modern interactions
+ *
+ * Features:
+ * - Animated particle background
+ * - Skeleton loading states
+ * - Smooth page transitions
+ * - Advanced micro-interactions
+ * - Glassmorphism effects
+ * - Enhanced search with live filtering
  */
 
 // DOM Elements
-let categoriesContainer;
+let subjectsGrid;
 let searchResults;
 let noResults;
 let searchInput;
@@ -16,13 +20,20 @@ let clearSearchBtn;
 let pdfModal;
 let pdfViewer;
 let closeModalBtn;
+let loadingSkeleton;
+let particlesContainer;
+
+// Animation state
+let isSearching = false;
+let animationFrameId;
+let particles = [];
 
 /**
  * Initialize the application on page load
  */
 document.addEventListener('DOMContentLoaded', () => {
     // Get DOM elements
-    categoriesContainer = document.getElementById('categoriesContainer');
+    subjectsGrid = document.getElementById('subjectsGrid');
     searchResults = document.getElementById('searchResults');
     noResults = document.getElementById('noResults');
     searchInput = document.getElementById('searchInput');
@@ -30,88 +41,313 @@ document.addEventListener('DOMContentLoaded', () => {
     pdfModal = document.getElementById('pdfModal');
     pdfViewer = document.getElementById('pdfViewer');
     closeModalBtn = document.getElementById('closeModal');
+    loadingSkeleton = document.getElementById('loadingSkeleton');
+    particlesContainer = document.getElementById('particles-container');
 
-    // Render all categories on page load
-    renderCategories();
+    // Initialize enhanced features
+    initializeParticles();
+    initializeEnhancedEffects();
+
+    // Check if we're on the main page or a subject page
+    if (subjectsGrid) {
+        // Main page - show subject grid with loading animation
+        initializeMainPage();
+    } else {
+        // Subject page - show PDF list for this subject
+        initializeSubjectPage();
+    }
 
     // Set up event listeners
     setupEventListeners();
 });
 
 /**
- * Render all category sections with their PDFs
+ * Initialize main page with loading states
  */
-function renderCategories() {
+function initializeMainPage() {
+    // Show loading skeleton
+    loadingSkeleton.style.display = 'flex';
+
+    // Simulate loading time for better UX
+    setTimeout(() => {
+        renderSubjectsGrid();
+
+        // Hide skeleton and show grid with animation
+        loadingSkeleton.style.style.opacity = '0';
+        setTimeout(() => {
+            loadingSkeleton.style.display = 'none';
+            subjectsGrid.style.display = 'grid';
+            subjectsGrid.style.animation = 'fadeInScale 0.8s ease-out both';
+        }, 300);
+    }, 1500);
+}
+
+/**
+ * Initialize subject page
+ */
+function initializeSubjectPage() {
+    // Get subject name from page title
+    const subjectName = document.title.split(' - ')[0];
+
+    // Add page transition effect
+    document.body.style.animation = 'fadeIn 0.6s ease-out both';
+
+    // Render PDFs with staggered animation
+    renderSubjectPdfs(subjectName);
+}
+
+/**
+ * Initialize particle animation system
+ */
+function initializeParticles() {
+    if (!particlesContainer) return;
+
+    // Create particles
+    for (let i = 0; i < 50; i++) {
+        createParticle();
+    }
+
+    // Start animation loop
+    animateParticles();
+}
+
+/**
+ * Create individual particle
+ */
+function createParticle() {
+    const particle = document.createElement('div');
+    particle.style.position = 'fixed';
+    particle.style.width = Math.random() * 4 + 1 + 'px';
+    particle.style.height = particle.style.width;
+    particle.style.backgroundColor = getComputedStyle(document.documentElement)
+        .getPropertyValue('--particle-colors').split(', ')[Math.floor(Math.random() * 6)];
+    particle.style.borderRadius = '50%';
+    particle.style.pointerEvents = 'none';
+    particle.style.zIndex = '-1';
+    particle.style.opacity = Math.random() * 0.6 + 0.2;
+
+    // Random initial position
+    particle.style.left = Math.random() * window.innerWidth + 'px';
+    particle.style.top = Math.random() * window.innerHeight + 'px';
+
+    // Particle properties
+    particle.dataset.velocityX = (Math.random() - 0.5) * 0.5;
+    particle.dataset.velocityY = (Math.random() - 0.5) * 0.5;
+    particle.dataset.size = parseFloat(particle.style.width);
+
+    document.body.appendChild(particle);
+    particles.push(particle);
+}
+
+/**
+ * Animate particles
+ */
+function animateParticles() {
+    particles.forEach(particle => {
+        let x = parseFloat(particle.style.left);
+        let y = parseFloat(particle.style.top);
+        let vx = parseFloat(particle.dataset.velocityX);
+        let vy = parseFloat(particle.dataset.velocityY);
+        const size = parseFloat(particle.dataset.size);
+
+        // Update position
+        x += vx;
+        y += vy;
+
+        // Bounce off walls
+        if (x <= 0 || x >= window.innerWidth - size) {
+            vx = -vx;
+            particle.dataset.velocityX = vx;
+        }
+        if (y <= 0 || y >= window.innerHeight - size) {
+            vy = -vy;
+            particle.dataset.velocityY = vy;
+        }
+
+        // Apply position
+        particle.style.left = x + 'px';
+        particle.style.top = y + 'px';
+
+        // Floating effect
+        particle.style.transform = `translateY(${Math.sin(Date.now() * 0.001 + x) * 2}px)`;
+    });
+
+    animationFrameId = requestAnimationFrame(animateParticles);
+}
+
+/**
+ * Initialize enhanced effects
+ */
+function initializeEnhancedEffects() {
+    // Add subtle parallax effect
+    document.addEventListener('mousemove', (e) => {
+        const x = (e.clientX / window.innerWidth - 0.5) * 20;
+        const y = (e.clientY / window.innerHeight - 0.5) * 20;
+
+        if (particlesContainer) {
+            particlesContainer.style.transform = `translate(${x}px, ${y}px)`;
+        }
+    });
+
+    // Add entrance animations for interactive elements
+    addEntranceAnimations();
+}
+
+/**
+ * Add entrance animations to interactive elements
+ */
+function addEntranceAnimations() {
+    const animatedElements = document.querySelectorAll('.subject-button, .pdf-item');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.style.animation = `fadeInUp 0.6s ease-out both`;
+                }, index * 100);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    animatedElements.forEach(el => observer.observe(el));
+}
+
+/**
+ * Render subjects grid with enhanced animations
+ */
+function renderSubjectsGrid() {
     // Get unique categories from pdfData
     const categories = [...new Set(pdfData.map(pdf => pdf.category))];
 
     // Sort categories alphabetically
     categories.sort();
 
-    // Clear the container
-    categoriesContainer.innerHTML = '';
+    // Clear the grid
+    subjectsGrid.innerHTML = '';
 
-    // Create category sections
-    categories.forEach(categoryName => {
-        // Filter PDFs for this category
-        const categoryPdfs = pdfData.filter(pdf => pdf.category === categoryName);
+    // Create subject buttons with staggered animation
+    categories.forEach((categoryName, index) => {
+        // Count PDFs in this category
+        const pdfCount = pdfData.filter(pdf => pdf.category === categoryName).length;
 
-        // Create category container
-        const categoryDiv = document.createElement('div');
-        categoryDiv.className = 'category';
+        // Create subject button
+        const subjectButton = createEnhancedSubjectButton(categoryName, pdfCount, index);
 
-        // Create category header
-        const headerDiv = document.createElement('div');
-        headerDiv.className = 'category-header';
-        headerDiv.setAttribute('role', 'button');
-        headerDiv.setAttribute('tabindex', '0');
-        headerDiv.setAttribute('aria-expanded', 'false');
-
-        const titleH3 = document.createElement('h3');
-        titleH3.className = 'category-title';
-        titleH3.textContent = categoryName;
-
-        const arrowSpan = document.createElement('span');
-        arrowSpan.className = 'category-arrow';
-        arrowSpan.textContent = '▼';
-
-        headerDiv.appendChild(titleH3);
-        headerDiv.appendChild(arrowSpan);
-
-        // Create category content (initially hidden)
-        const contentDiv = document.createElement('div');
-        contentDiv.className = 'category-content';
-
-        // Add PDFs to content
-        categoryPdfs.forEach(pdf => {
-            const pdfItem = createPdfElement(pdf);
-            contentDiv.appendChild(pdfItem);
-        });
-
-        // Assemble category
-        categoryDiv.appendChild(headerDiv);
-        categoryDiv.appendChild(contentDiv);
-        categoriesContainer.appendChild(categoryDiv);
-
-        // Add click event for expand/collapse
-        headerDiv.addEventListener('click', () => toggleCategory(headerDiv, contentDiv, arrowSpan));
-
-        // Add keyboard support for accessibility
-        headerDiv.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                toggleCategory(headerDiv, contentDiv, arrowSpan);
-            }
-        });
+        // Add staggered animation delay
+        setTimeout(() => {
+            subjectsGrid.appendChild(subjectButton);
+        }, index * 150);
     });
 }
 
 /**
- * Create a PDF item element
- * @param {Object} pdf - PDF data object
- * @returns {HTMLElement} - PDF item div
+ * Create enhanced subject button with advanced animations
  */
-function createPdfElement(pdf) {
+function createEnhancedSubjectButton(categoryName, pdfCount, index) {
+    const subjectButton = document.createElement('a');
+    subjectButton.className = 'subject-button';
+    subjectButton.href = `${categoryName.toLowerCase()}.html`;
+    subjectButton.style.animationDelay = `${index * 0.1}s`;
+
+    // Get subject icon and color
+    const subjectData = subjectInfo[categoryName] || { icon: "📚", color: "#6b7280" };
+
+    // Create content with enhanced structure
+    subjectButton.innerHTML = `
+        <div class="subject-icon-wrapper">
+            <div class="subject-icon">${subjectData.icon}</div>
+        </div>
+        <div class="subject-content">
+            <div class="subject-name">${categoryName}</div>
+            <div class="subject-count">${pdfCount} PDF${pdfCount !== 1 ? 's' : ''}</div>
+        </div>
+        <div class="subject-glow"></div>
+    `;
+
+    // Add advanced hover effects
+    addSubjectButtonEffects(subjectButton);
+
+    return subjectButton;
+}
+
+/**
+ * Add advanced effects to subject buttons
+ */
+function addSubjectButtonEffects(button) {
+    // Ripple effect on click
+    button.addEventListener('click', function(e) {
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple';
+        ripple.style.position = 'absolute';
+        ripple.style.borderRadius = '50%';
+        ripple.style.background = 'rgba(255, 255, 255, 0.6)';
+        ripple.style.width = ripple.style.height = '40px';
+        ripple.style.transform = 'scale(0)';
+        ripple.style.animation = 'ripple 0.6s ease-out';
+        ripple.style.pointerEvents = 'none';
+
+        const rect = this.getBoundingClientRect();
+        ripple.style.left = (e.clientX - rect.left - 20) + 'px';
+        ripple.style.top = (e.clientY - rect.top - 20) + 'px';
+
+        this.appendChild(ripple);
+
+        setTimeout(() => ripple.remove(), 600);
+    });
+
+    // Magnetic effect
+    button.addEventListener('mousemove', function(e) {
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+
+        this.style.transform = `translateY(-8px) rotateX(${-y * 0.01}deg) rotateY(${x * 0.01}deg)`;
+    });
+
+    button.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0) rotateX(0) rotateY(0)';
+    });
+}
+
+/**
+ * Render PDFs for a subject page with staggered animations
+ */
+function renderSubjectPdfs(subjectName) {
+    // Find PDFs for this subject
+    const subjectPdfs = pdfData.filter(pdf => pdf.category === subjectName);
+
+    // Get the pdf-list container
+    const pdfListContainer = document.querySelector('.pdf-list');
+
+    if (!pdfListContainer) return;
+
+    // Clear existing content
+    pdfListContainer.innerHTML = '';
+
+    if (subjectPdfs.length === 0) {
+        // Show no PDFs message with animation
+        pdfListContainer.innerHTML = `
+            <div class="no-results">
+                <p>No PDFs available for ${subjectName} yet.</p>
+            </div>
+        `;
+        return;
+    }
+
+    // Add PDF items with staggered animation
+    subjectPdfs.forEach((pdf, index) => {
+        setTimeout(() => {
+            const pdfItem = createEnhancedPdfElement(pdf);
+            pdfListContainer.appendChild(pdfItem);
+        }, index * 100);
+    });
+}
+
+/**
+ * Create enhanced PDF item with advanced animations
+ */
+function createEnhancedPdfElement(pdf) {
     const pdfItem = document.createElement('div');
     pdfItem.className = 'pdf-item';
 
@@ -137,14 +373,14 @@ function createPdfElement(pdf) {
     const actionsDiv = document.createElement('div');
     actionsDiv.className = 'pdf-actions';
 
-    // View button
+    // View button with enhanced effects
     const viewBtn = document.createElement('button');
     viewBtn.className = 'btn-view';
     viewBtn.textContent = 'View';
     viewBtn.setAttribute('data-pdf-path', pdf.path);
     viewBtn.addEventListener('click', () => openPdfModal(pdf.path));
 
-    // Download button
+    // Download button with enhanced effects
     const downloadBtn = document.createElement('a');
     downloadBtn.className = 'btn-download';
     downloadBtn.textContent = 'Download';
@@ -158,43 +394,41 @@ function createPdfElement(pdf) {
     pdfItem.appendChild(pdfInfo);
     pdfItem.appendChild(actionsDiv);
 
+    // Add hover effects
+    addPdfItemEffects(pdfItem);
+
     return pdfItem;
 }
 
 /**
- * Toggle category expand/collapse
- * @param {HTMLElement} header - Category header element
- * @param {HTMLElement} content - Category content element
- * @param {HTMLElement} arrow - Arrow indicator element
+ * Add enhanced effects to PDF items
  */
-function toggleCategory(header, content, arrow) {
-    const isExpanded = content.classList.contains('expanded');
+function addPdfItemEffects(pdfItem) {
+    pdfItem.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateX(8px)';
+    });
 
-    if (isExpanded) {
-        // Collapse
-        content.classList.remove('expanded');
-        header.classList.remove('expanded');
-        arrow.classList.remove('expanded');
-        header.setAttribute('aria-expanded', 'false');
-    } else {
-        // Expand
-        content.classList.add('expanded');
-        header.classList.add('expanded');
-        arrow.classList.add('expanded');
-        header.setAttribute('aria-expanded', 'true');
-    }
+    pdfItem.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateX(0)';
+    });
 }
 
 /**
- * Handle search input and filter PDFs
+ * Enhanced search with animations
  */
 function handleSearch() {
     const query = searchInput.value.trim().toLowerCase();
 
-    // If search is empty, return to category view
+    // If search is empty, return to subject view
     if (query === '') {
         clearSearchResults();
         return;
+    }
+
+    // Add searching state
+    if (!isSearching) {
+        isSearching = true;
+        searchInput.style.animation = 'pulse 1s ease-in-out infinite';
     }
 
     // Filter PDFs based on query
@@ -206,100 +440,252 @@ function handleSearch() {
         return titleMatch || categoryMatch || descriptionMatch;
     });
 
-    // Display results
-    if (results.length > 0) {
-        displaySearchResults(results);
-    } else {
-        displayNoResults();
-    }
+    // Animate search results
+    setTimeout(() => {
+        if (results.length > 0) {
+            displayEnhancedSearchResults(results);
+        } else {
+            displayEnhancedNoResults();
+        }
+
+        // Remove searching state
+        isSearching = false;
+        searchInput.style.animation = '';
+    }, 300);
 }
 
 /**
- * Display search results
- * @param {Array} results - Filtered PDF array
+ * Display enhanced search results with animations
  */
-function displaySearchResults(results) {
-    // Hide categories and no results
-    categoriesContainer.style.display = 'none';
-    noResults.style.display = 'none';
-    searchResults.style.display = 'block';
+function displayEnhancedSearchResults(results) {
+    // Hide subjects grid and no results
+    subjectsGrid.style.animation = 'fadeOut 0.3s ease-out both';
 
-    // Clear previous results
-    searchResults.innerHTML = '';
+    setTimeout(() => {
+        subjectsGrid.style.display = 'none';
+        noResults.style.display = 'none';
+        searchResults.style.display = 'block';
+        searchResults.style.animation = 'fadeInScale 0.5s ease-out both';
 
-    // Add matching PDFs
-    results.forEach(pdf => {
-        const pdfItem = createPdfElement(pdf);
-        searchResults.appendChild(pdfItem);
-    });
+        // Clear previous results
+        searchResults.innerHTML = '';
+
+        // Group results by category
+        const groupedResults = {};
+        results.forEach(pdf => {
+            if (!groupedResults[pdf.category]) {
+                groupedResults[pdf.category] = [];
+            }
+            groupedResults[pdf.category].push(pdf);
+        });
+
+        // Display results by category with staggered animation
+        Object.keys(groupedResults).sort().forEach((category, categoryIndex) => {
+            setTimeout(() => {
+                // Add category header
+                const categoryHeader = document.createElement('div');
+                categoryHeader.className = 'search-category';
+                categoryHeader.textContent = category;
+                categoryHeader.style.animation = 'slideInLeft 0.4s ease-out both';
+                searchResults.appendChild(categoryHeader);
+
+                // Add PDFs in this category
+                groupedResults[category].forEach((pdf, pdfIndex) => {
+                    setTimeout(() => {
+                        const pdfItem = createEnhancedPdfElement(pdf);
+                        searchResults.appendChild(pdfItem);
+                    }, pdfIndex * 100);
+                });
+            }, categoryIndex * 200);
+        });
+    }, 300);
 }
 
 /**
- * Display "no results" message
+ * Display enhanced no results message
  */
-function displayNoResults() {
-    categoriesContainer.style.display = 'none';
-    searchResults.style.display = 'none';
-    noResults.style.display = 'block';
+function displayEnhancedNoResults() {
+    subjectsGrid.style.animation = 'fadeOut 0.3s ease-out both';
+
+    setTimeout(() => {
+        subjectsGrid.style.display = 'none';
+        searchResults.style.display = 'none';
+        noResults.style.display = 'block';
+        noResults.style.animation = 'fadeInScale 0.5s ease-out both';
+    }, 300);
 }
 
 /**
- * Clear search and return to category view
+ * Clear search with animations
  */
 function clearSearchResults() {
     searchInput.value = '';
-    searchResults.style.display = 'none';
-    noResults.style.display = 'none';
-    categoriesContainer.style.display = 'flex';
+    searchResults.style.animation = 'fadeOut 0.3s ease-out both';
+
+    setTimeout(() => {
+        searchResults.style.display = 'none';
+        noResults.style.display = 'none';
+        subjectsGrid.style.display = 'grid';
+        subjectsGrid.style.animation = 'fadeInScale 0.5s ease-out both';
+    }, 300);
 }
 
 /**
- * Open PDF in modal viewer
- * @param {string} pdfPath - Path to PDF file
+ * Enhanced PDF modal with animations
  */
 function openPdfModal(pdfPath) {
-    pdfViewer.src = pdfPath;
+    // Show loading state
     pdfModal.classList.add('active');
+    pdfModal.style.opacity = '0';
+
+    pdfViewer.style.opacity = '0';
+    pdfViewer.src = pdfPath;
+
+    // Animate modal entrance
+    setTimeout(() => {
+        pdfModal.style.opacity = '1';
+        pdfModal.querySelector('.modal-content').style.animation = 'slideUpScale 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+    }, 10);
+
+    // Fade in PDF viewer after load
+    pdfViewer.onload = () => {
+        pdfViewer.style.transition = 'opacity 0.3s ease-out';
+        pdfViewer.style.opacity = '1';
+    };
 
     // Prevent background scrolling
     document.body.style.overflow = 'hidden';
 }
 
 /**
- * Close PDF modal
+ * Enhanced modal close with animations
  */
 function closePdfModal() {
-    pdfModal.classList.remove('active');
-    pdfViewer.src = '';
+    pdfModal.querySelector('.modal-content').style.animation = 'fadeOut 0.3s ease-out both';
 
-    // Restore background scrolling
-    document.body.style.overflow = '';
+    setTimeout(() => {
+        pdfModal.classList.remove('active');
+        pdfModal.style.opacity = '0';
+        pdfViewer.style.opacity = '0';
+        pdfViewer.src = '';
+
+        // Restore background scrolling
+        document.body.style.overflow = '';
+    }, 300);
 }
 
 /**
- * Set up all event listeners
+ * Enhanced event listeners setup
  */
 function setupEventListeners() {
-    // Search input - real-time filtering
-    searchInput.addEventListener('input', handleSearch);
+    // Search input with debouncing
+    let searchTimeout;
+    if (searchInput) {
+        searchInput.addEventListener('input', () => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(handleSearch, 300);
+        });
+    }
 
-    // Clear search button
-    clearSearchBtn.addEventListener('click', clearSearchResults);
+    // Clear search button with animation
+    if (clearSearchBtn) {
+        clearSearchBtn.addEventListener('click', () => {
+            clearSearchBtn.style.transform = 'translateY(-50%) rotate(180deg)';
+            clearSearchResults();
+            setTimeout(() => {
+                clearSearchBtn.style.transform = 'translateY(-50%) rotate(0deg)';
+            }, 300);
+        });
+    }
 
     // Close modal button
-    closeModalBtn.addEventListener('click', closePdfModal);
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', closePdfModal);
+    }
 
     // Close modal on backdrop click
-    pdfModal.addEventListener('click', (e) => {
-        if (e.target === pdfModal) {
-            closePdfModal();
-        }
-    });
+    if (pdfModal) {
+        pdfModal.addEventListener('click', (e) => {
+            if (e.target === pdfModal) {
+                closePdfModal();
+            }
+        });
+    }
 
     // Close modal on Escape key
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && pdfModal.classList.contains('active')) {
+        if (e.key === 'Escape' && pdfModal && pdfModal.classList.contains('active')) {
             closePdfModal();
         }
     });
+
+    // Add smooth scroll behavior
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
 }
+
+/**
+ * Clean up animations on page unload
+ */
+window.addEventListener('beforeunload', () => {
+    if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+    }
+});
+
+// Add ripple animation CSS
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes ripple {
+        to {
+            transform: scale(4);
+            opacity: 0;
+        }
+    }
+
+    @keyframes fadeOut {
+        to {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+    }
+
+    .subject-icon-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .subject-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .subject-glow {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle, rgba(102, 126, 234, 0.3) 0%, transparent 70%);
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        transition: opacity 0.3s;
+        pointer-events: none;
+    }
+
+    .subject-button:hover .subject-glow {
+        opacity: 1;
+    }
+`;
+document.head.appendChild(style);
