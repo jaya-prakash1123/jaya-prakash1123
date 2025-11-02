@@ -805,7 +805,51 @@ body::before {
     }
 }
 
-/* Loading Skeleton Animation */
+/* Enhanced Loading Skeleton Animation */
+.loading-skeleton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+    margin-top: 3rem;
+}
+
+.skeleton-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.skeleton-item {
+    height: 280px;
+    border-radius: 24px;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    border: 2px solid var(--glass-border);
+    position: relative;
+    overflow: hidden;
+}
+
+.skeleton-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg,
+        var(--surface) 0%,
+        var(--surface-light) 25%,
+        var(--surface) 50%,
+        var(--surface-light) 75%,
+        var(--surface) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+    border-radius: 22px;
+}
+
 .skeleton {
     background: linear-gradient(90deg, var(--surface) 25%, var(--surface-light) 50%, var(--surface) 75%);
     background-size: 200% 100%;
