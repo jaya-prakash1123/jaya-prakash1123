@@ -73,7 +73,7 @@ function initializeMainPage() {
         renderSubjectsGrid();
 
         // Hide skeleton and show grid with animation
-        loadingSkeleton.style.style.opacity = '0';
+        loadingSkeleton.style.opacity = '0';
         setTimeout(() => {
             loadingSkeleton.style.display = 'none';
             subjectsGrid.style.display = 'grid';
