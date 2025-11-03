@@ -19,7 +19,7 @@
  */
 
 const pdfData = [
-    // Mathematics
+    // Mathematics (Maths)
     {
         id: 1,
         title: "Calculus - Chapter 1: Limits and Continuity",
