@@ -65,17 +65,17 @@ const pdfData = [
     {
         id: 6,
         title: "Chemistry - Periodic Table and Elements",
-        category: "Science",
+        category: "Chemistry",
         filename: "periodic-table.pdf",
-        path: "pdfs/science/periodic-table.pdf",
+        path: "pdfs/chemistry/periodic-table.pdf",
         description: "Understanding the periodic table, element properties, and chemical families"
     },
     {
         id: 7,
         title: "Biology - Cell Structure and Function",
-        category: "Science",
+        category: "Biology",
         filename: "cell-biology.pdf",
-        path: "pdfs/science/cell-biology.pdf",
+        path: "pdfs/biology/cell-biology.pdf",
         description: "Detailed overview of cellular components and their functions"
     },
     {
