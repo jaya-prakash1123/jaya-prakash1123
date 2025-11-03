@@ -243,12 +243,42 @@ function renderSubjectsGrid() {
 
         // Add staggered animation delay
         setTimeout(() => {
-            // Add staggered animation delay
-        setTimeout(() => {
             subjectsGrid.appendChild(subjectButton);
         }, index * 200);
-        }, index * 150);
     });
+}
+
+/**
+ * Create square subject button for 2-per-row layout
+ */
+function createSquareSubjectButton(categoryName, pdfCount, index) {
+    const subjectButton = document.createElement('button');
+    subjectButton.className = 'subject-button';
+    subjectButton.style.animationDelay = `${index * 0.15}s`;
+
+    // Get subject icon and color
+    const subjectData = subjectInfo[categoryName] || { icon: "📚", color: "#6b7280" };
+
+    // Create content with enhanced structure for square layout
+    subjectButton.innerHTML = `
+        <div class="subject-icon-wrapper">
+            <div class="subject-icon">${subjectData.icon}</div>
+        </div>
+        <div class="subject-content">
+            <div class="subject-name">${categoryName}</div>
+            <div class="subject-count">${pdfCount} PDF${pdfCount !== 1 ? 's' : ''}</div>
+        </div>
+        <div class="subject-glow"></div>
+    `;
+
+    // Add enhanced hover effects
+    addSubjectButtonEffects(subjectButton);
+
+    // Add click handler to show subject PDFs
+    subjectButton.addEventListener('click', () => showSubjectPdfs(categoryName));
+
+    return subjectButton;
+}
 }
 
 /**
