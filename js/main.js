@@ -378,7 +378,7 @@ function createEnhancedPdfElement(pdf) {
     viewBtn.className = 'btn-view';
     viewBtn.textContent = 'View';
     viewBtn.setAttribute('data-pdf-path', pdf.path);
-    viewBtn.addEventListener('click', () => openPdfModal(pdf.path));
+    viewBtn.addEventListener('click', () => openPdfModal(pdf.path, pdf.title));
 
     // Download button with enhanced effects
     const downloadBtn = document.createElement('a');
