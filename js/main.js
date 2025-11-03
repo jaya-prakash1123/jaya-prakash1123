@@ -35,6 +35,14 @@ let totalPages = 0;
 let currentScale = 1.0;
 let isPdfLoading = false;
 
+// Subject information for icons and colors
+const subjectInfo = {
+    "Mathematics": { icon: "📐", color: "#3b82f6" },
+    "Physics": { icon: "⚛️", color: "#ef4444" },
+    "Chemistry": { icon: "🧪", color: "#10b981" },
+    "Biology": { icon: "🧬", color: "#8b5cf6" }
+};
+
 /**
  * Initialize the application on page load
  */
