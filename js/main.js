@@ -1109,17 +1109,64 @@ function openIframePdfModal(pdfPath) {
  * Enhanced modal close with animations
  */
 function closePdfModal() {
-    pdfModal.querySelector('.modal-content').style.animation = 'fadeOut 0.3s ease-out both';
+    const pdfModal = document.getElementById('pdfModal');
+    if (!pdfModal) return;
+
+    const modalContent = pdfModal.querySelector('.pdf-modal-content') || pdfModal.querySelector('.modal-content');
+    if (modalContent) {
+        modalContent.style.animation = 'fadeOut 0.3s ease-out both';
+    }
 
     setTimeout(() => {
         pdfModal.classList.remove('active');
         pdfModal.style.opacity = '0';
-        pdfViewer.style.opacity = '0';
-        pdfViewer.src = '';
+
+        // Clear PDF viewer state
+        clearPdfViewer();
 
         // Restore background scrolling
         document.body.style.overflow = '';
     }, 300);
+}
+
+/**
+ * Clear PDF viewer state
+ */
+function clearPdfViewer() {
+    pdfDoc = null;
+    currentPage = 1;
+    totalPages = 0;
+    currentScale = 1.0;
+    isPdfLoading = false;
+
+    // Clear canvas
+    const pdfCanvas = document.getElementById('pdfCanvas');
+    if (pdfCanvas) {
+        const ctx = pdfCanvas.getContext('2d');
+        ctx.clearRect(0, 0, pdfCanvas.width, pdfCanvas.height);
+    }
+
+    // Clear thumbnails
+    const pageThumbnails = document.getElementById('pdfThumbnails');
+    if (pageThumbnails) {
+        pageThumbnails.innerHTML = '';
+    }
+
+    // Reset displays
+    const pdfTitle = document.getElementById('pdfTitle');
+    const pdfPageInfo = document.getElementById('pdfPageInfo');
+    const pdfZoomDisplay = document.getElementById('pdfZoomDisplay');
+
+    if (pdfTitle) pdfTitle.textContent = 'Loading PDF...';
+    if (pdfPageInfo) pdfPageInfo.textContent = 'Page 0 of 0';
+    if (pdfZoomDisplay) pdfZoomDisplay.textContent = '100%';
+
+    // Clear iframe if it exists
+    const pdfViewer = document.getElementById('pdfViewer');
+    if (pdfViewer) {
+        pdfViewer.style.opacity = '0';
+        pdfViewer.src = '';
+    }
 }
 
 /**
