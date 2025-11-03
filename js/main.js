@@ -28,6 +28,13 @@ let isSearching = false;
 let animationFrameId;
 let particles = [];
 
+// PDF Viewer State
+let pdfDoc = null;
+let currentPage = 1;
+let totalPages = 0;
+let currentScale = 1.0;
+let isPdfLoading = false;
+
 /**
  * Initialize the application on page load
  */
