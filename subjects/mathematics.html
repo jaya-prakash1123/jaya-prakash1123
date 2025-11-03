@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics - Study Materials Library</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="background-animation">
+        <div class="particles-container" id="particles-container"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-book-open"></i>
+                <h1>Study Materials</h1>
+            </div>
+            <nav class="nav-menu">
+                <a href="../index.html" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="mathematics.html" class="nav-link active">
+                    <i class="fas fa-calculator"></i>
+                    <span>Mathematics</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Subject Hero -->
+        <section class="subject-hero">
+            <div class="subject-hero-content">
+                <div class="subject-icon">
+                    <i class="fas fa-calculator"></i>
+                </div>
+                <h2 class="subject-title">Mathematics</h2>
+                <p class="subject-description">
+                    Master mathematical concepts with comprehensive study materials covering calculus, algebra, trigonometry, and statistics.
+                </p>
+            </div>
+        </section>
+
+        <!-- Search Section -->
+        <section class="search-section">
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search mathematics materials...">
+                    <button class="btn-clear" id="clearSearch">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- PDFs Section -->
+        <section class="pdfs-section">
+            <div class="section-header">
+                <h3>
+                    <i class="fas fa-file-pdf"></i>
+                    Mathematics Materials
+                </h3>
+            </div>
+
+            <div class="pdf-list" id="pdfList">
+                <!-- PDFs will be dynamically inserted here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- PDF Modal -->
+    <div class="pdf-modal" id="pdfModal">
+        <div class="pdf-modal-content">
+            <!-- PDF Viewer Header -->
+            <div class="pdf-viewer-header">
+                <div class="pdf-viewer-title" id="pdfTitle">Loading PDF...</div>
+                <div class="pdf-viewer-controls">
+                    <button class="pdf-control-btn" id="prevPageBtn" title="Previous Page">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="pdf-control-btn" id="nextPageBtn" title="Next Page">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <div class="pdf-zoom-display" id="pdfZoomDisplay">100%</div>
+                    <button class="pdf-control-btn" id="zoomOutBtn" title="Zoom Out">
+                        <i class="fas fa-search-minus"></i>
+                    </button>
+                    <button class="pdf-control-btn" id="zoomInBtn" title="Zoom In">
+                        <i class="fas fa-search-plus"></i>
+                    </button>
+                    <button class="pdf-control-btn" id="zoomResetBtn" title="Reset Zoom">
+                        <i class="fas fa-compress"></i>
+                    </button>
+                    <button class="pdf-control-btn" id="downloadPdfBtn" title="Download PDF">
+                        <i class="fas fa-download"></i>
+                    </button>
+                    <button class="pdf-control-btn" id="closePdfBtn" title="Close PDF">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- PDF Viewer Container -->
+            <div class="pdf-viewer-container">
+                <!-- Loading Overlay -->
+                <div class="pdf-loading-overlay" id="pdfLoadingOverlay">
+                    <div class="loading-spinner"></div>
+                    <div class="loading-text">Loading PDF...</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="pdfProgressFill"></div>
+                    </div>
+                    <div class="progress-text" id="pdfProgressText">0%</div>
+                </div>
+
+                <!-- PDF Canvas Container -->
+                <div class="pdf-canvas-container">
+                    <canvas id="pdfCanvas"></canvas>
+                </div>
+
+                <!-- PDF Sidebar -->
+                <div class="pdf-sidebar">
+                    <div class="pdf-sidebar-header">
+                        <h4>Pages</h4>
+                        <div class="pdf-page-info" id="pdfPageInfo">Page 0 of 0</div>
+                    </div>
+                    <div class="pdf-thumbnails" id="pdfThumbnails">
+                        <!-- Thumbnails will be dynamically inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <i class="fas fa-book-open"></i>
+                    <h3>Study Materials</h3>
+                </div>
+                <p>Comprehensive mathematics study resources.</p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="mathematics.html">Mathematics</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 Study Materials Library. Mathematics Department.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="../js/data.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+        // Set PDF.js worker source
+        if (typeof pdfjsLib !== 'undefined') {
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        }
+    </script>
+</body>
+</html>
