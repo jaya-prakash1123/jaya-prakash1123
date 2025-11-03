@@ -24,8 +24,8 @@ const pdfData = [
         id: 1,
         title: "Calculus - Chapter 1: Limits and Continuity",
         category: "Mathematics",
-        filename: "calculus-limits.pdf",
-        path: "pdfs/mathematics/calculus-limits.pdf",
+        filename: "sample-math.pdf",
+        path: "pdfs/mathematics/sample-math.pdf",
         description: "Introduction to limits, continuity, and foundational calculus concepts"
     },
     {
