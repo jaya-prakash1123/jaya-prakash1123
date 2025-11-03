@@ -238,7 +238,29 @@ body::before {
     position: relative;
 }
 
-/* Enhanced Subjects Grid with Advanced Animations */
+/* Enhanced Subjects Grid with 2-Per-Row Square Layout */
+.subjects-grid-two {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    padding: 0;
+    list-style: none;
+    animation: fadeInUp 0.8s ease-out;
+    max-width: 800px;
+    margin: 3rem auto 0;
+    perspective: 1000px;
+}
+
+/* Responsive grid - switch to 1 column on mobile */
+@media (max-width: 768px) {
+    .subjects-grid-two {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+        gap: 1.5rem;
+    }
+}
+
+/* Keep old grid for backward compatibility */
 .subjects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
