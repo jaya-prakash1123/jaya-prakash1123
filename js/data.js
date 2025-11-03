@@ -53,11 +53,11 @@ const pdfData = [
         description: "Introduction to probability theory and statistical analysis"
     },
 
-    // Science
+    // Science - Physics
     {
         id: 5,
         title: "Physics - Newton's Laws of Motion",
-        category: "Science",
+        category: "Physics",
         filename: "newtons-laws.pdf",
         path: "pdfs/science/newtons-laws.pdf",
         description: "Comprehensive guide to Newton's three laws and their applications"
