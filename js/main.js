@@ -243,7 +243,10 @@ function renderSubjectsGrid() {
 
         // Add staggered animation delay
         setTimeout(() => {
+            // Add staggered animation delay
+        setTimeout(() => {
             subjectsGrid.appendChild(subjectButton);
+        }, index * 200);
         }, index * 150);
     });
 }
