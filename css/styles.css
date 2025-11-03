@@ -300,10 +300,23 @@ body::before {
     left: 0;
     right: 0;
     bottom: 0;
-    background: var(--primary-gradient);
+    background: var(--metallic-gradient);
     opacity: 0;
     transition: opacity var(--transition-normal);
     z-index: -1;
+}
+
+.subject-button::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+    transform: rotate(45deg);
+    transition: all var(--transition-slow);
+    opacity: 0;
 }
 
 .subject-button::after {
