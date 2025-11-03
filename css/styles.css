@@ -7,27 +7,37 @@
     box-sizing: border-box;
 }
 
-/* Advanced CSS Custom Properties with Modern Color Palette */
+/* Dark Metallic Grey Theme CSS Custom Properties */
 :root {
-    /* Modern Gradient Colors */
-    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    --success-gradient: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);
-    --warning-gradient: linear-gradient(135deg, #fc4a1a 0%, #f7b733 100%);
-    --info-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    /* Metallic Gradient Colors */
+    --primary-gradient: linear-gradient(135deg, #6b7280 0%, #4b5563 50%, #374151 100%);
+    --secondary-gradient: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%);
+    --accent-gradient: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    --metallic-gradient: linear-gradient(145deg, #4b5563 0%, #374151 50%, #1f2937 100%);
+    --shimmer-gradient: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.1) 100%);
 
-    /* Glassmorphism Variables */
-    --glass-bg: rgba(255, 255, 255, 0.1);
-    --glass-border: rgba(255, 255, 255, 0.2);
-    --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-    --glass-blur: blur(4px);
+    /* Dark Metallic Theme Variables */
+    --metallic-bg: #1f2937;
+    --metallic-surface: #374151;
+    --metallic-light: #4b5563;
+    --metallic-lighter: #6b7280;
+    --metallic-dark: #111827;
+    --metallic-border: rgba(156, 163, 175, 0.2);
+    --metallic-glow: rgba(107, 114, 128, 0.3);
 
-    /* Enhanced Shadows */
-    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
-    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.25);
-    --shadow-xl: 0 16px 64px rgba(0, 0, 0, 0.35);
-    --shadow-glow: 0 0 20px rgba(102, 126, 234, 0.4);
+    /* Glassmorphism for Dark Theme */
+    --glass-bg: rgba(31, 41, 55, 0.8);
+    --glass-border: rgba(107, 114, 128, 0.3);
+    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    --glass-blur: blur(8px);
+
+    /* Enhanced Dark Shadows */
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.6);
+    --shadow-xl: 0 16px 64px rgba(0, 0, 0, 0.8);
+    --shadow-metallic: inset 0 2px 4px rgba(255, 255, 255, 0.1), 0 8px 16px rgba(0, 0, 0, 0.4);
+    --shadow-glow: 0 0 20px rgba(107, 114, 128, 0.2);
 
     /* Animation Durations */
     --transition-fast: 0.2s;
@@ -35,19 +45,26 @@
     --transition-slow: 0.5s;
     --transition-bounce: 0.6s;
 
-    /* Modern Colors */
-    --primary-color: #667eea;
-    --primary-dark: #5a67d8;
-    --primary-light: #9f7aea;
-    --secondary-color: #f093fb;
-    --accent-color: #4facfe;
-    --background: #0f0f23;
-    --surface: #1a1a2e;
-    --surface-light: #252542;
-    --text-primary: #ffffff;
-    --text-secondary: #a0aec0;
-    --text-muted: #718096;
-    --border-color: rgba(255, 255, 255, 0.1);
+    /* Dark Metallic Colors */
+    --primary-color: #6b7280;
+    --primary-dark: #4b5563;
+    --primary-light: #9ca3af;
+    --secondary-color: #60a5fa;
+    --accent-color: #3b82f6;
+    --background: #0f172a;
+    --surface: #1e293b;
+    --surface-light: #334155;
+    --text-primary: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --border-color: rgba(148, 163, 184, 0.2);
+
+    /* PDF Viewer Colors */
+    --pdf-bg: #1f2937;
+    --pdf-surface: #374151;
+    --pdf-control-bg: #4b5563;
+    --pdf-control-hover: #6b7280;
+    --pdf-active: #3b82f6;
 
     /* Particle Animation Colors */
     --particle-colors: #667eea, #9f7aea, #f093fb, #4facfe, #fc4a1a, #f7b733;
