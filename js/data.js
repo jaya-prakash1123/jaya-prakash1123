@@ -81,17 +81,17 @@ const pdfData = [
     {
         id: 8,
         title: "Physics - Electricity and Magnetism",
-        category: "Science",
+        category: "Physics",
         filename: "electricity-magnetism.pdf",
-        path: "pdfs/science/electricity-magnetism.pdf",
+        path: "pdfs/physics/electricity-magnetism.pdf",
         description: "Principles of electric circuits, magnetic fields, and electromagnetic induction"
     },
     {
         id: 9,
         title: "Chemistry - Chemical Reactions and Equations",
-        category: "Science",
+        category: "Chemistry",
         filename: "chemical-reactions.pdf",
-        path: "pdfs/science/chemical-reactions.pdf",
+        path: "pdfs/chemistry/chemical-reactions.pdf",
         description: "Types of chemical reactions, balancing equations, and stoichiometry"
     },
 
