@@ -55,14 +55,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeParticles();
     initializeEnhancedEffects();
 
-    // Check if we're on the main page or a subject page
-    if (subjectsGrid) {
-        // Main page - show subject grid with loading animation
-        initializeMainPage();
-    } else {
-        // Subject page - show PDF list for this subject
-        initializeSubjectPage();
-    }
+    // Always use single-page layout with 2-per-row grid
+    renderSubjectsGrid();
 
     // Set up event listeners
     setupEventListeners();
