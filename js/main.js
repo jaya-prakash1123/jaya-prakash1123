@@ -23,10 +23,34 @@ let closeModalBtn;
 let loadingSkeleton;
 let particlesContainer;
 
+// PDF viewer elements
+let prevPageBtn;
+let nextPageBtn;
+let zoomInBtn;
+let zoomOutBtn;
+let pageInfo;
+
 // Animation state
 let isSearching = false;
 let animationFrameId;
 let particles = [];
+
+// PDF viewer state
+let currentPdfDoc = null;
+let currentPage = 1;
+let totalPages = 0;
+let currentScale = 1.5;
+let pageRendering = false;
+let pageNumPending = null;
+
+// Subject information for icons and colors
+const subjectInfo = {
+    "Math": { icon: "📐", color: "#00CEDA" },
+    "Physics": { icon: "⚛️", color: "#FF1493" },
+    "Chemistry": { icon: "🧪", color: "#FFD700" },
+    "Biology": { icon: "🧬", color: "#00CEDA" },
+    "Computer Science": { icon: "💻", color: "#FF1493" }
+};
 
 /**
  * Initialize the application on page load
@@ -43,6 +67,16 @@ document.addEventListener('DOMContentLoaded', () => {
     closeModalBtn = document.getElementById('closeModal');
     loadingSkeleton = document.getElementById('loadingSkeleton');
     particlesContainer = document.getElementById('particles-container');
+
+    // Get PDF control elements
+    prevPageBtn = document.getElementById('prevPage');
+    nextPageBtn = document.getElementById('nextPage');
+    zoomInBtn = document.getElementById('zoomIn');
+    zoomOutBtn = document.getElementById('zoomOut');
+    pageInfo = document.getElementById('pageInfo');
+
+    // Initialize PDF.js worker
+    initializePDFViewer();
 
     // Initialize enhanced features
     initializeParticles();
@@ -220,8 +254,24 @@ function renderSubjectsGrid() {
     // Get unique categories from pdfData
     const categories = [...new Set(pdfData.map(pdf => pdf.category))];
 
-    // Sort categories alphabetically
-    categories.sort();
+    // Define desired category order: Math, Physics, Chemistry, Biology, Computer Science
+    const desiredOrder = ['Math', 'Physics', 'Chemistry', 'Biology', 'Computer Science'];
+
+    // Sort categories based on desired order, then alphabetically for any others
+    categories.sort((a, b) => {
+        const aIndex = desiredOrder.indexOf(a);
+        const bIndex = desiredOrder.indexOf(b);
+
+        if (aIndex !== -1 && bIndex !== -1) {
+            return aIndex - bIndex;
+        } else if (aIndex !== -1) {
+            return -1;
+        } else if (bIndex !== -1) {
+            return 1;
+        } else {
+            return a.localeCompare(b);
+        }
+    });
 
     // Clear the grid
     subjectsGrid.innerHTML = '';
@@ -531,15 +581,16 @@ function clearSearchResults() {
 }
 
 /**
- * Enhanced PDF modal with animations
+ * Enhanced PDF modal with PDF.js integration
  */
 function openPdfModal(pdfPath) {
     // Show loading state
     pdfModal.classList.add('active');
     pdfModal.style.opacity = '0';
 
-    pdfViewer.style.opacity = '0';
-    pdfViewer.src = pdfPath;
+    // Clear previous PDF
+    pdfViewer.innerHTML = '';
+    showPdfLoading();
 
     // Animate modal entrance
     setTimeout(() => {
@@ -547,11 +598,8 @@ function openPdfModal(pdfPath) {
         pdfModal.querySelector('.modal-content').style.animation = 'slideUpScale 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
     }, 10);
 
-    // Fade in PDF viewer after load
-    pdfViewer.onload = () => {
-        pdfViewer.style.transition = 'opacity 0.3s ease-out';
-        pdfViewer.style.opacity = '1';
-    };
+    // Load PDF using PDF.js
+    loadPDFDocument(pdfPath);
 
     // Prevent background scrolling
     document.body.style.overflow = 'hidden';
@@ -566,12 +614,204 @@ function closePdfModal() {
     setTimeout(() => {
         pdfModal.classList.remove('active');
         pdfModal.style.opacity = '0';
-        pdfViewer.style.opacity = '0';
-        pdfViewer.src = '';
+        pdfViewer.innerHTML = '';
+
+        // Clean up PDF resources
+        if (currentPdfDoc) {
+            currentPdfDoc.destroy();
+            currentPdfDoc = null;
+        }
+
+        // Reset PDF state
+        currentPdfDoc = null;
+        currentPage = 1;
+        totalPages = 0;
+        currentScale = 1.5;
+        updatePdfControls();
 
         // Restore background scrolling
         document.body.style.overflow = '';
     }, 300);
+}
+
+/**
+ * Initialize PDF.js viewer
+ */
+function initializePDFViewer() {
+    // Set up PDF.js worker
+    if (typeof pdfjsLib !== 'undefined') {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    }
+}
+
+/**
+ * Show PDF loading state
+ */
+function showPdfLoading() {
+    pdfViewer.innerHTML = `
+        <div class="pdf-loading">
+            <div class="pdf-loading-spinner"></div>
+            <p>Loading PDF...</p>
+        </div>
+    `;
+}
+
+/**
+ * Show PDF error state
+ */
+function showPdfError(error) {
+    pdfViewer.innerHTML = `
+        <div class="pdf-error">
+            <div class="pdf-error-icon">⚠️</div>
+            <p>Failed to load PDF</p>
+            <p style="font-size: 0.9rem; opacity: 0.8;">${error.message || 'Unknown error occurred'}</p>
+        </div>
+    `;
+}
+
+/**
+ * Load PDF document using PDF.js
+ */
+function loadPDFDocument(pdfPath) {
+    if (typeof pdfjsLib === 'undefined') {
+        showPdfError(new Error('PDF.js library not loaded'));
+        return;
+    }
+
+    const loadingTask = pdfjsLib.getDocument(pdfPath);
+
+    loadingTask.promise.then(
+        (pdf) => {
+            currentPdfDoc = pdf;
+            totalPages = pdf.numPages;
+            currentPage = 1;
+
+            // Update controls
+            updatePdfControls();
+
+            // Render first page
+            renderPage(currentPage);
+        },
+        (error) => {
+            console.error('Error loading PDF:', error);
+            showPdfError(error);
+        }
+    );
+}
+
+/**
+ * Render PDF page
+ */
+function renderPage(pageNumber) {
+    if (!currentPdfDoc || pageRendering) {
+        return;
+    }
+
+    pageRendering = true;
+
+    currentPdfDoc.getPage(pageNumber).then((page) => {
+        const viewport = page.getViewport({ scale: currentScale });
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+
+        const renderContext = {
+            canvasContext: context,
+            viewport: viewport
+        };
+
+        const renderTask = page.render(renderContext);
+
+        renderTask.promise.then(() => {
+            pageRendering = false;
+
+            // Clear viewer and add canvas
+            pdfViewer.innerHTML = '';
+            pdfViewer.appendChild(canvas);
+
+            // Update page info
+            updatePageInfo();
+
+            // Render any pending page
+            if (pageNumPending !== null) {
+                renderPage(pageNumPending);
+                pageNumPending = null;
+            }
+        });
+    });
+}
+
+/**
+ * Update PDF controls state
+ */
+function updatePdfControls() {
+    if (prevPageBtn) {
+        prevPageBtn.disabled = currentPage <= 1;
+    }
+
+    if (nextPageBtn) {
+        nextPageBtn.disabled = currentPage >= totalPages;
+    }
+
+    updatePageInfo();
+}
+
+/**
+ * Update page info display
+ */
+function updatePageInfo() {
+    if (pageInfo) {
+        pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+    }
+}
+
+/**
+ * Queue render page if not already rendering
+ */
+function queueRenderPage(pageNumber) {
+    if (pageRendering) {
+        pageNumPending = pageNumber;
+    } else {
+        renderPage(pageNumber);
+    }
+}
+
+/**
+ * Go to previous page
+ */
+function onPrevPage() {
+    if (currentPage <= 1) return;
+    currentPage--;
+    queueRenderPage(currentPage);
+    updatePdfControls();
+}
+
+/**
+ * Go to next page
+ */
+function onNextPage() {
+    if (currentPage >= totalPages) return;
+    currentPage++;
+    queueRenderPage(currentPage);
+    updatePdfControls();
+}
+
+/**
+ * Zoom in
+ */
+function onZoomIn() {
+    currentScale = Math.min(currentScale + 0.25, 3);
+    queueRenderPage(currentPage);
+}
+
+/**
+ * Zoom out
+ */
+function onZoomOut() {
+    currentScale = Math.max(currentScale - 0.25, 0.5);
+    queueRenderPage(currentPage);
 }
 
 /**
@@ -612,10 +852,45 @@ function setupEventListeners() {
         });
     }
 
-    // Close modal on Escape key
+    // PDF control event listeners
+    if (prevPageBtn) {
+        prevPageBtn.addEventListener('click', onPrevPage);
+    }
+
+    if (nextPageBtn) {
+        nextPageBtn.addEventListener('click', onNextPage);
+    }
+
+    if (zoomInBtn) {
+        zoomInBtn.addEventListener('click', onZoomIn);
+    }
+
+    if (zoomOutBtn) {
+        zoomOutBtn.addEventListener('click', onZoomOut);
+    }
+
+    // Keyboard navigation for PDF viewer
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && pdfModal && pdfModal.classList.contains('active')) {
-            closePdfModal();
+        if (pdfModal && pdfModal.classList.contains('active')) {
+            switch (e.key) {
+                case 'Escape':
+                    closePdfModal();
+                    break;
+                case 'ArrowLeft':
+                    onPrevPage();
+                    break;
+                case 'ArrowRight':
+                    onNextPage();
+                    break;
+                case '+':
+                case '=':
+                    onZoomIn();
+                    break;
+                case '-':
+                case '_':
+                    onZoomOut();
+                    break;
+            }
         }
     });
 

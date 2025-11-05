@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Study Materials - PDF Library</title>
+    <title>PDF Library</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -14,8 +14,8 @@
     <div id="particles-container"></div>
     <!-- Header -->
     <header class="site-header">
-        <h1>Study Materials Library</h1>
-        <p class="tagline">Access educational resources and study materials</p>
+        <h1>PDF Library</h1>
+        <p class="tagline">Browse, View & Download Educational PDFs</p>
     </header>
 
     <!-- Search Bar -->
@@ -52,16 +52,25 @@
     <div id="pdfModal" class="modal">
         <div class="modal-content">
             <button id="closeModal" class="close-btn" aria-label="Close modal">×</button>
-            <iframe id="pdfViewer" title="PDF Viewer"></iframe>
+            <div class="pdf-controls">
+                <button id="prevPage" class="pdf-nav-btn" aria-label="Previous page">‹</button>
+                <span id="pageInfo" class="page-info">Page 1 of 1</span>
+                <button id="nextPage" class="pdf-nav-btn" aria-label="Next page">›</button>
+                <button id="zoomOut" class="pdf-nav-btn" aria-label="Zoom out">−</button>
+                <button id="zoomIn" class="pdf-nav-btn" aria-label="Zoom in">+</button>
+            </div>
+            <div id="pdfViewer" class="pdf-viewer-container"></div>
         </div>
     </div>
 
     <!-- Footer -->
     <footer class="site-footer">
-        <p>&copy; 2024 Study Materials Library. All rights reserved.</p>
+        <p>&copy; 2024 PDF Library. All rights reserved.</p>
     </footer>
 
     <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/page-turn.js@4.1.0/dist/page-turn.min.js"></script>
     <script src="js/data.js"></script>
     <script src="js/main.js"></script>
 </body>
