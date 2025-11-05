@@ -413,7 +413,7 @@ const pdfData = [
     {
         id: 50,
         title: "Application Of Integrals",
-        category: "Maths",
+        category: "Math",
         filename: "Application of integrals.pdf",
         path: "pdfs/Maths/Application of integrals.pdf",
         description: ""
@@ -421,7 +421,7 @@ const pdfData = [
     {
         id: 51,
         title: "Applications Of Derivatives",
-        category: "Maths",
+        category: "Math",
         filename: "Applications of derivatives.pdf",
         path: "pdfs/Maths/Applications of derivatives.pdf",
         description: ""
@@ -429,7 +429,7 @@ const pdfData = [
     {
         id: 52,
         title: "Binomial Theorem",
-        category: "Maths",
+        category: "Math",
         filename: "Binomial theorem.pdf",
         path: "pdfs/Maths/Binomial theorem.pdf",
         description: ""
@@ -437,7 +437,7 @@ const pdfData = [
     {
         id: 53,
         title: "Complex Numbers And Quadratic Equations",
-        category: "Maths",
+        category: "Math",
         filename: "Complex numbers and quadratic equations.pdf",
         path: "pdfs/Maths/Complex numbers and quadratic equations.pdf",
         description: ""
@@ -445,7 +445,7 @@ const pdfData = [
     {
         id: 54,
         title: "Conic Sections",
-        category: "Maths",
+        category: "Math",
         filename: "Conic sections.pdf",
         path: "pdfs/Maths/Conic sections.pdf",
         description: ""
@@ -453,7 +453,7 @@ const pdfData = [
     {
         id: 55,
         title: "Continuity And Differentiability",
-        category: "Maths",
+        category: "Math",
         filename: "Continuity and differentiability.pdf",
         path: "pdfs/Maths/Continuity and differentiability.pdf",
         description: ""
@@ -461,7 +461,7 @@ const pdfData = [
     {
         id: 56,
         title: "Determinants",
-        category: "Maths",
+        category: "Math",
         filename: "Determinants.pdf",
         path: "pdfs/Maths/Determinants.pdf",
         description: ""
@@ -469,7 +469,7 @@ const pdfData = [
     {
         id: 57,
         title: "Differential Equations",
-        category: "Maths",
+        category: "Math",
         filename: "Differential equations.pdf",
         path: "pdfs/Maths/Differential equations.pdf",
         description: ""
@@ -477,7 +477,7 @@ const pdfData = [
     {
         id: 58,
         title: "Integrals",
-        category: "Maths",
+        category: "Math",
         filename: "Integrals.pdf",
         path: "pdfs/Maths/Integrals.pdf",
         description: ""
@@ -485,7 +485,7 @@ const pdfData = [
     {
         id: 59,
         title: "Introduction To 3D Geometry",
-        category: "Maths",
+        category: "Math",
         filename: "Introduction to 3d geometry.pdf",
         path: "pdfs/Maths/Introduction to 3d geometry.pdf",
         description: ""
@@ -493,7 +493,7 @@ const pdfData = [
     {
         id: 60,
         title: "Inverse Trigonometric Functions",
-        category: "Maths",
+        category: "Math",
         filename: "Inverse trigonometric functions.pdf",
         path: "pdfs/Maths/Inverse trigonometric functions.pdf",
         description: ""
@@ -501,7 +501,7 @@ const pdfData = [
     {
         id: 61,
         title: "Limits And Derivatives",
-        category: "Maths",
+        category: "Math",
         filename: "Limits and derivatives.pdf",
         path: "pdfs/Maths/Limits and derivatives.pdf",
         description: ""
@@ -509,7 +509,7 @@ const pdfData = [
     {
         id: 62,
         title: "Linear Inequalities",
-        category: "Maths",
+        category: "Math",
         filename: "Linear inequalities.pdf",
         path: "pdfs/Maths/Linear inequalities.pdf",
         description: ""
@@ -517,7 +517,7 @@ const pdfData = [
     {
         id: 63,
         title: "Linear Programming",
-        category: "Maths",
+        category: "Math",
         filename: "Linear programming.pdf",
         path: "pdfs/Maths/Linear programming.pdf",
         description: ""
@@ -525,7 +525,7 @@ const pdfData = [
     {
         id: 64,
         title: "Matrices",
-        category: "Maths",
+        category: "Math",
         filename: "Matrices.pdf",
         path: "pdfs/Maths/Matrices.pdf",
         description: ""
@@ -533,7 +533,7 @@ const pdfData = [
     {
         id: 65,
         title: "Permutations And Combinations",
-        category: "Maths",
+        category: "Math",
         filename: "Permutations and combinations.pdf",
         path: "pdfs/Maths/Permutations and combinations.pdf",
         description: ""
@@ -541,7 +541,7 @@ const pdfData = [
     {
         id: 66,
         title: "Probability",
-        category: "Maths",
+        category: "Math",
         filename: "Probability.pdf",
         path: "pdfs/Maths/Probability.pdf",
         description: ""
@@ -549,7 +549,7 @@ const pdfData = [
     {
         id: 67,
         title: "Relations And Functions",
-        category: "Maths",
+        category: "Math",
         filename: "Relations and Functions.pdf",
         path: "pdfs/Maths/Relations and Functions.pdf",
         description: ""
@@ -557,7 +557,7 @@ const pdfData = [
     {
         id: 68,
         title: "Sequences And Series",
-        category: "Maths",
+        category: "Math",
         filename: "Sequences and series.pdf",
         path: "pdfs/Maths/Sequences and series.pdf",
         description: ""
@@ -565,7 +565,7 @@ const pdfData = [
     {
         id: 69,
         title: "Sets",
-        category: "Maths",
+        category: "Math",
         filename: "Sets.pdf",
         path: "pdfs/Maths/Sets.pdf",
         description: ""
@@ -573,7 +573,7 @@ const pdfData = [
     {
         id: 70,
         title: "Statistics",
-        category: "Maths",
+        category: "Math",
         filename: "statistics.pdf",
         path: "pdfs/Maths/statistics.pdf",
         description: ""
@@ -581,7 +581,7 @@ const pdfData = [
     {
         id: 71,
         title: "Stright Lines",
-        category: "Maths",
+        category: "Math",
         filename: "Stright lines.pdf",
         path: "pdfs/Maths/Stright lines.pdf",
         description: ""
@@ -589,7 +589,7 @@ const pdfData = [
     {
         id: 72,
         title: "Trignometric Functions",
-        category: "Maths",
+        category: "Math",
         filename: "Trignometric functions.pdf",
         path: "pdfs/Maths/Trignometric functions.pdf",
         description: ""
@@ -597,7 +597,7 @@ const pdfData = [
     {
         id: 73,
         title: "Vector Algebra",
-        category: "Maths",
+        category: "Math",
         filename: "Vector algebra.pdf",
         path: "pdfs/Maths/Vector algebra.pdf",
         description: ""
