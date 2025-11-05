@@ -332,9 +332,9 @@ body::before {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    filter: drop-shadow(0 4px 8px rgba(102, 126, 234, 0.3));
+    filter: drop-shadow(0 4px 8px rgba(0, 206, 218, 0.5));
     transition: all var(--transition-normal);
-    animation: float 3s ease-in-out infinite;
+    animation: float 3s ease-in-out infinite, neonGlow 2s ease-in-out infinite alternate;
 }
 
 .subject-button:hover .subject-icon {
