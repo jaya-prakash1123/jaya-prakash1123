@@ -589,8 +589,20 @@ function closePdfModal() {
     setTimeout(() => {
         pdfModal.classList.remove('active');
         pdfModal.style.opacity = '0';
-        pdfViewer.style.opacity = '0';
-        pdfViewer.src = '';
+        pdfViewer.innerHTML = '';
+
+        // Clean up PDF resources
+        if (currentPdfDoc) {
+            currentPdfDoc.destroy();
+            currentPdfDoc = null;
+        }
+
+        // Reset PDF state
+        currentPdfDoc = null;
+        currentPage = 1;
+        totalPages = 0;
+        currentScale = 1.5;
+        updatePdfControls();
 
         // Restore background scrolling
         document.body.style.overflow = '';
