@@ -914,6 +914,33 @@ body::before {
     }
 }
 
+@keyframes neonPulse {
+    0%, 100% {
+        text-shadow: var(--neon-glow-teal);
+    }
+    50% {
+        text-shadow: var(--neon-glow-pink);
+    }
+}
+
+@keyframes neonGlow {
+    0%, 100% {
+        filter: drop-shadow(0 4px 8px rgba(0, 206, 218, 0.5));
+    }
+    50% {
+        filter: drop-shadow(0 8px 16px rgba(255, 20, 147, 0.7));
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 /* Enhanced Loading Skeleton Animation */
 .loading-skeleton {
     display: flex;
