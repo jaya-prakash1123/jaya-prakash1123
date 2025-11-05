@@ -556,15 +556,16 @@ function clearSearchResults() {
 }
 
 /**
- * Enhanced PDF modal with animations
+ * Enhanced PDF modal with PDF.js integration
  */
 function openPdfModal(pdfPath) {
     // Show loading state
     pdfModal.classList.add('active');
     pdfModal.style.opacity = '0';
 
-    pdfViewer.style.opacity = '0';
-    pdfViewer.src = pdfPath;
+    // Clear previous PDF
+    pdfViewer.innerHTML = '';
+    showPdfLoading();
 
     // Animate modal entrance
     setTimeout(() => {
@@ -572,11 +573,8 @@ function openPdfModal(pdfPath) {
         pdfModal.querySelector('.modal-content').style.animation = 'slideUpScale 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
     }, 10);
 
-    // Fade in PDF viewer after load
-    pdfViewer.onload = () => {
-        pdfViewer.style.transition = 'opacity 0.3s ease-out';
-        pdfViewer.style.opacity = '1';
-    };
+    // Load PDF using PDF.js
+    loadPDFDocument(pdfPath);
 
     // Prevent background scrolling
     document.body.style.overflow = 'hidden';
