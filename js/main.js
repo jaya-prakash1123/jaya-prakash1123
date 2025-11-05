@@ -827,10 +827,45 @@ function setupEventListeners() {
         });
     }
 
-    // Close modal on Escape key
+    // PDF control event listeners
+    if (prevPageBtn) {
+        prevPageBtn.addEventListener('click', onPrevPage);
+    }
+
+    if (nextPageBtn) {
+        nextPageBtn.addEventListener('click', onNextPage);
+    }
+
+    if (zoomInBtn) {
+        zoomInBtn.addEventListener('click', onZoomIn);
+    }
+
+    if (zoomOutBtn) {
+        zoomOutBtn.addEventListener('click', onZoomOut);
+    }
+
+    // Keyboard navigation for PDF viewer
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && pdfModal && pdfModal.classList.contains('active')) {
-            closePdfModal();
+        if (pdfModal && pdfModal.classList.contains('active')) {
+            switch (e.key) {
+                case 'Escape':
+                    closePdfModal();
+                    break;
+                case 'ArrowLeft':
+                    onPrevPage();
+                    break;
+                case 'ArrowRight':
+                    onNextPage();
+                    break;
+                case '+':
+                case '=':
+                    onZoomIn();
+                    break;
+                case '-':
+                case '_':
+                    onZoomOut();
+                    break;
+            }
         }
     });
 
