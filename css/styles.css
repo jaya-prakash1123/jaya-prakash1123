@@ -339,7 +339,7 @@ body::before {
 
 .subject-button:hover .subject-icon {
     transform: scale(1.2) rotateY(10deg);
-    filter: drop-shadow(0 8px 16px rgba(102, 126, 234, 0.5));
+    filter: drop-shadow(0 8px 16px rgba(255, 20, 147, 0.7));
 }
 
 .subject-name {
