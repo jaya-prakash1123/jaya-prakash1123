@@ -647,10 +647,10 @@ body::before {
     height: 90%;
     border-radius: 24px;
     position: relative;
-    box-shadow: var(--shadow-xl), 0 0 40px rgba(102, 126, 234, 0.3);
+    box-shadow: var(--shadow-xl), var(--neon-glow-teal), var(--neon-glow-pink);
     display: flex;
     flex-direction: column;
-    border: 2px solid var(--glass-border);
+    border: 2px solid var(--neon-teal);
     backdrop-filter: var(--glass-blur);
     animation: slideUpScale 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
