@@ -293,8 +293,8 @@ body::before {
 
 .subject-button:hover {
     transform: translateY(-8px) rotateX(5deg);
-    box-shadow: var(--shadow-xl), var(--shadow-glow);
-    border-color: var(--primary-light);
+    box-shadow: var(--shadow-xl), var(--neon-glow-teal), var(--neon-glow-pink);
+    border-color: var(--neon-teal);
 }
 
 .subject-button:hover::before {
