@@ -245,8 +245,24 @@ function renderSubjectsGrid() {
     // Get unique categories from pdfData
     const categories = [...new Set(pdfData.map(pdf => pdf.category))];
 
-    // Sort categories alphabetically
-    categories.sort();
+    // Define desired category order: Math, Physics, Chemistry, Biology, Computer Science
+    const desiredOrder = ['Math', 'Physics', 'Chemistry', 'Biology', 'Computer Science'];
+
+    // Sort categories based on desired order, then alphabetically for any others
+    categories.sort((a, b) => {
+        const aIndex = desiredOrder.indexOf(a);
+        const bIndex = desiredOrder.indexOf(b);
+
+        if (aIndex !== -1 && bIndex !== -1) {
+            return aIndex - bIndex;
+        } else if (aIndex !== -1) {
+            return -1;
+        } else if (bIndex !== -1) {
+            return 1;
+        } else {
+            return a.localeCompare(b);
+        }
+    });
 
     // Clear the grid
     subjectsGrid.innerHTML = '';
