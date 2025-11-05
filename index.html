@@ -52,7 +52,14 @@
     <div id="pdfModal" class="modal">
         <div class="modal-content">
             <button id="closeModal" class="close-btn" aria-label="Close modal">×</button>
-            <iframe id="pdfViewer" title="PDF Viewer"></iframe>
+            <div class="pdf-controls">
+                <button id="prevPage" class="pdf-nav-btn" aria-label="Previous page">‹</button>
+                <span id="pageInfo" class="page-info">Page 1 of 1</span>
+                <button id="nextPage" class="pdf-nav-btn" aria-label="Next page">›</button>
+                <button id="zoomOut" class="pdf-nav-btn" aria-label="Zoom out">−</button>
+                <button id="zoomIn" class="pdf-nav-btn" aria-label="Zoom in">+</button>
+            </div>
+            <div id="pdfViewer" class="pdf-viewer-container"></div>
         </div>
     </div>
 
