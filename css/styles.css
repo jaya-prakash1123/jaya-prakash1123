@@ -7,27 +7,36 @@
     box-sizing: border-box;
 }
 
-/* Advanced CSS Custom Properties with Modern Color Palette */
+/* Advanced CSS Custom Properties with Neon Theme */
 :root {
-    /* Modern Gradient Colors */
-    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    --success-gradient: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);
-    --warning-gradient: linear-gradient(135deg, #fc4a1a 0%, #f7b733 100%);
-    --info-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    /* Neon Theme Colors */
+    --neon-teal: #00CEDA;
+    --neon-pink: #FF1493;
+    --neon-yellow: #FFD700;
+    --dark-metallic: #1a1a1a;
+    --neon-glow-teal: 0 0 20px rgba(0, 206, 218, 0.8);
+    --neon-glow-pink: 0 0 20px rgba(255, 20, 147, 0.8);
+    --neon-glow-yellow: 0 0 20px rgba(255, 215, 0, 0.8);
 
-    /* Glassmorphism Variables */
-    --glass-bg: rgba(255, 255, 255, 0.1);
-    --glass-border: rgba(255, 255, 255, 0.2);
-    --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-    --glass-blur: blur(4px);
+    /* Modern Gradient Colors */
+    --primary-gradient: linear-gradient(135deg, var(--neon-teal) 0%, var(--neon-pink) 100%);
+    --secondary-gradient: linear-gradient(135deg, var(--neon-pink) 0%, var(--neon-yellow) 100%);
+    --success-gradient: linear-gradient(135deg, var(--neon-teal) 0%, #00b09b 100%);
+    --warning-gradient: linear-gradient(135deg, var(--neon-yellow) 0%, #f7b733 100%);
+    --info-gradient: linear-gradient(135deg, var(--neon-pink) 0%, var(--neon-teal) 100%);
+
+    /* Glassmorphism Variables for Dark Metallic Theme */
+    --glass-bg: rgba(26, 26, 26, 0.7);
+    --glass-border: rgba(0, 206, 218, 0.3);
+    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    --glass-blur: blur(8px);
 
     /* Enhanced Shadows */
-    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
-    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.25);
-    --shadow-xl: 0 16px 64px rgba(0, 0, 0, 0.35);
-    --shadow-glow: 0 0 20px rgba(102, 126, 234, 0.4);
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.6);
+    --shadow-xl: 0 16px 64px rgba(0, 0, 0, 0.8);
+    --shadow-glow: var(--neon-glow-teal);
 
     /* Animation Durations */
     --transition-fast: 0.2s;
@@ -36,21 +45,21 @@
     --transition-bounce: 0.6s;
 
     /* Modern Colors */
-    --primary-color: #667eea;
-    --primary-dark: #5a67d8;
-    --primary-light: #9f7aea;
-    --secondary-color: #f093fb;
-    --accent-color: #4facfe;
-    --background: #0f0f23;
-    --surface: #1a1a2e;
-    --surface-light: #252542;
+    --primary-color: var(--neon-teal);
+    --primary-dark: var(--neon-pink);
+    --primary-light: var(--neon-yellow);
+    --secondary-color: var(--neon-pink);
+    --accent-color: var(--neon-teal);
+    --background: #0a0a0a;
+    --surface: var(--dark-metallic);
+    --surface-light: #2a2a2a;
     --text-primary: #ffffff;
-    --text-secondary: #a0aec0;
-    --text-muted: #718096;
-    --border-color: rgba(255, 255, 255, 0.1);
+    --text-secondary: #e0e0e0;
+    --text-muted: #a0a0a0;
+    --border-color: rgba(0, 206, 218, 0.2);
 
     /* Particle Animation Colors */
-    --particle-colors: #667eea, #9f7aea, #f093fb, #4facfe, #fc4a1a, #f7b733;
+    --particle-colors: var(--neon-teal), var(--neon-pink), var(--neon-yellow), #00b09b, #f7b733, #4facfe;
 }
 
 /* Enhanced Base Typography and Layout */
