@@ -23,10 +23,25 @@ let closeModalBtn;
 let loadingSkeleton;
 let particlesContainer;
 
+// PDF viewer elements
+let prevPageBtn;
+let nextPageBtn;
+let zoomInBtn;
+let zoomOutBtn;
+let pageInfo;
+
 // Animation state
 let isSearching = false;
 let animationFrameId;
 let particles = [];
+
+// PDF viewer state
+let currentPdfDoc = null;
+let currentPage = 1;
+let totalPages = 0;
+let currentScale = 1.5;
+let pageRendering = false;
+let pageNumPending = null;
 
 /**
  * Initialize the application on page load
