@@ -610,6 +610,186 @@ function closePdfModal() {
 }
 
 /**
+ * Initialize PDF.js viewer
+ */
+function initializePDFViewer() {
+    // Set up PDF.js worker
+    if (typeof pdfjsLib !== 'undefined') {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    }
+}
+
+/**
+ * Show PDF loading state
+ */
+function showPdfLoading() {
+    pdfViewer.innerHTML = `
+        <div class="pdf-loading">
+            <div class="pdf-loading-spinner"></div>
+            <p>Loading PDF...</p>
+        </div>
+    `;
+}
+
+/**
+ * Show PDF error state
+ */
+function showPdfError(error) {
+    pdfViewer.innerHTML = `
+        <div class="pdf-error">
+            <div class="pdf-error-icon">⚠️</div>
+            <p>Failed to load PDF</p>
+            <p style="font-size: 0.9rem; opacity: 0.8;">${error.message || 'Unknown error occurred'}</p>
+        </div>
+    `;
+}
+
+/**
+ * Load PDF document using PDF.js
+ */
+function loadPDFDocument(pdfPath) {
+    if (typeof pdfjsLib === 'undefined') {
+        showPdfError(new Error('PDF.js library not loaded'));
+        return;
+    }
+
+    const loadingTask = pdfjsLib.getDocument(pdfPath);
+
+    loadingTask.promise.then(
+        (pdf) => {
+            currentPdfDoc = pdf;
+            totalPages = pdf.numPages;
+            currentPage = 1;
+
+            // Update controls
+            updatePdfControls();
+
+            // Render first page
+            renderPage(currentPage);
+        },
+        (error) => {
+            console.error('Error loading PDF:', error);
+            showPdfError(error);
+        }
+    );
+}
+
+/**
+ * Render PDF page
+ */
+function renderPage(pageNumber) {
+    if (!currentPdfDoc || pageRendering) {
+        return;
+    }
+
+    pageRendering = true;
+
+    currentPdfDoc.getPage(pageNumber).then((page) => {
+        const viewport = page.getViewport({ scale: currentScale });
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+
+        const renderContext = {
+            canvasContext: context,
+            viewport: viewport
+        };
+
+        const renderTask = page.render(renderContext);
+
+        renderTask.promise.then(() => {
+            pageRendering = false;
+
+            // Clear viewer and add canvas
+            pdfViewer.innerHTML = '';
+            pdfViewer.appendChild(canvas);
+
+            // Update page info
+            updatePageInfo();
+
+            // Render any pending page
+            if (pageNumPending !== null) {
+                renderPage(pageNumPending);
+                pageNumPending = null;
+            }
+        });
+    });
+}
+
+/**
+ * Update PDF controls state
+ */
+function updatePdfControls() {
+    if (prevPageBtn) {
+        prevPageBtn.disabled = currentPage <= 1;
+    }
+
+    if (nextPageBtn) {
+        nextPageBtn.disabled = currentPage >= totalPages;
+    }
+
+    updatePageInfo();
+}
+
+/**
+ * Update page info display
+ */
+function updatePageInfo() {
+    if (pageInfo) {
+        pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+    }
+}
+
+/**
+ * Queue render page if not already rendering
+ */
+function queueRenderPage(pageNumber) {
+    if (pageRendering) {
+        pageNumPending = pageNumber;
+    } else {
+        renderPage(pageNumber);
+    }
+}
+
+/**
+ * Go to previous page
+ */
+function onPrevPage() {
+    if (currentPage <= 1) return;
+    currentPage--;
+    queueRenderPage(currentPage);
+    updatePdfControls();
+}
+
+/**
+ * Go to next page
+ */
+function onNextPage() {
+    if (currentPage >= totalPages) return;
+    currentPage++;
+    queueRenderPage(currentPage);
+    updatePdfControls();
+}
+
+/**
+ * Zoom in
+ */
+function onZoomIn() {
+    currentScale = Math.min(currentScale + 0.25, 3);
+    queueRenderPage(currentPage);
+}
+
+/**
+ * Zoom out
+ */
+function onZoomOut() {
+    currentScale = Math.max(currentScale - 0.25, 0.5);
+    queueRenderPage(currentPage);
+}
+
+/**
  * Enhanced event listeners setup
  */
 function setupEventListeners() {
