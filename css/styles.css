@@ -365,9 +365,10 @@ body::before {
 }
 
 .subject-button:hover .subject-count {
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
+    background: rgba(255, 215, 0, 0.2);
+    color: var(--neon-yellow);
     transform: scale(1.05);
+    box-shadow: var(--neon-glow-yellow);
 }
 
 /* Enhanced Subject Pages */
