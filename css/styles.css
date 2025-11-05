@@ -141,12 +141,12 @@ body::before {
     font-size: 3.5rem;
     font-weight: 800;
     margin-bottom: 1rem;
-    background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 100%);
+    background: linear-gradient(135deg, var(--neon-teal) 0%, var(--neon-pink) 50%, var(--neon-yellow) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
-    animation: fadeInScale 1s ease-out;
+    text-shadow: var(--neon-glow-teal);
+    animation: fadeInScale 1s ease-out, neonPulse 2s ease-in-out infinite alternate;
     letter-spacing: -0.02em;
 }
 
