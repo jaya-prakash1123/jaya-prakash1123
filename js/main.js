@@ -43,6 +43,15 @@ let currentScale = 1.5;
 let pageRendering = false;
 let pageNumPending = null;
 
+// Subject information for icons and colors
+const subjectInfo = {
+    "Math": { icon: "📐", color: "#00CEDA" },
+    "Physics": { icon: "⚛️", color: "#FF1493" },
+    "Chemistry": { icon: "🧪", color: "#FFD700" },
+    "Biology": { icon: "🧬", color: "#00CEDA" },
+    "Computer Science": { icon: "💻", color: "#FF1493" }
+};
+
 /**
  * Initialize the application on page load
  */
