@@ -216,10 +216,10 @@ body::before {
 }
 
 .clear-btn:hover {
-    background: var(--primary-color);
+    background: var(--neon-pink);
     color: white;
     transform: translateY(-50%) scale(1.1);
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--neon-glow-pink), var(--shadow-md);
 }
 
 /* Main Content */
