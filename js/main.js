@@ -59,6 +59,16 @@ document.addEventListener('DOMContentLoaded', () => {
     loadingSkeleton = document.getElementById('loadingSkeleton');
     particlesContainer = document.getElementById('particles-container');
 
+    // Get PDF control elements
+    prevPageBtn = document.getElementById('prevPage');
+    nextPageBtn = document.getElementById('nextPage');
+    zoomInBtn = document.getElementById('zoomIn');
+    zoomOutBtn = document.getElementById('zoomOut');
+    pageInfo = document.getElementById('pageInfo');
+
+    // Initialize PDF.js worker
+    initializePDFViewer();
+
     // Initialize enhanced features
     initializeParticles();
     initializeEnhancedEffects();
