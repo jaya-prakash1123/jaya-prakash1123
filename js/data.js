@@ -770,4 +770,108 @@ const pdfData = [
         path: "pdfs/Physics/Work, Power, Energy.pdf",
         description: ""
     },
+    {
+        id: 95,
+        title: "Introduction to Computer Science",
+        category: "Computer Science",
+        filename: "Introduction to Computer Science.pdf",
+        path: "pdfs/Computer Science/Introduction to Computer Science.pdf",
+        description: "Fundamental concepts and principles of computer science"
+    },
+    {
+        id: 96,
+        title: "Data Structures and Algorithms",
+        category: "Computer Science",
+        filename: "Data Structures and Algorithms.pdf",
+        path: "pdfs/Computer Science/Data Structures and Algorithms.pdf",
+        description: "Core data structures and algorithm analysis techniques"
+    },
+    {
+        id: 97,
+        title: "Web Development Fundamentals",
+        category: "Computer Science",
+        filename: "Web Development Fundamentals.pdf",
+        path: "pdfs/Computer Science/Web Development Fundamentals.pdf",
+        description: "HTML, CSS, JavaScript and modern web development practices"
+    },
+    {
+        id: 98,
+        title: "Database Management Systems",
+        category: "Computer Science",
+        filename: "Database Management Systems.pdf",
+        path: "pdfs/Computer Science/Database Management Systems.pdf",
+        description: "Relational databases, SQL, and database design principles"
+    },
+    {
+        id: 99,
+        title: "Object-Oriented Programming",
+        category: "Computer Science",
+        filename: "Object-Oriented Programming.pdf",
+        path: "pdfs/Computer Science/Object-Oriented Programming.pdf",
+        description: "OOP concepts, design patterns, and principles"
+    },
+    {
+        id: 100,
+        title: "Computer Networks",
+        category: "Computer Science",
+        filename: "Computer Networks.pdf",
+        path: "pdfs/Computer Science/Computer Networks.pdf",
+        description: "Network protocols, architectures, and communication systems"
+    },
+    {
+        id: 101,
+        title: "Operating Systems",
+        category: "Computer Science",
+        filename: "Operating Systems.pdf",
+        path: "pdfs/Computer Science/Operating Systems.pdf",
+        description: "Process management, memory management, and file systems"
+    },
+    {
+        id: 102,
+        title: "Software Engineering",
+        category: "Computer Science",
+        filename: "Software Engineering.pdf",
+        path: "pdfs/Computer Science/Software Engineering.pdf",
+        description: "Software development methodologies and best practices"
+    },
+    {
+        id: 103,
+        title: "Artificial Intelligence",
+        category: "Computer Science",
+        filename: "Artificial Intelligence.pdf",
+        path: "pdfs/Computer Science/Artificial Intelligence.pdf",
+        description: "Introduction to AI concepts, machine learning fundamentals"
+    },
+    {
+        id: 104,
+        title: "Cybersecurity Essentials",
+        category: "Computer Science",
+        filename: "Cybersecurity Essentials.pdf",
+        path: "pdfs/Computer Science/Cybersecurity Essentials.pdf",
+        description: "Network security, cryptography, and protection mechanisms"
+    },
+    {
+        id: 105,
+        title: "Python Programming",
+        category: "Computer Science",
+        filename: "Python Programming.pdf",
+        path: "pdfs/Computer Science/Python Programming.pdf",
+        description: "Comprehensive guide to Python programming language"
+    },
+    {
+        id: 106,
+        title: "Java Programming",
+        category: "Computer Science",
+        filename: "Java Programming.pdf",
+        path: "pdfs/Computer Science/Java Programming.pdf",
+        description: "Object-oriented programming with Java"
+    },
+    {
+        id: 107,
+        title: "Mobile App Development",
+        category: "Computer Science",
+        filename: "Mobile App Development.pdf",
+        path: "pdfs/Computer Science/Mobile App Development.pdf",
+        description: "iOS and Android application development"
+    }
 ];
