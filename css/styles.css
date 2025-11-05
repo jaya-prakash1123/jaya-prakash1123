@@ -1218,10 +1218,11 @@ body::before {
 #searchInput:focus-visible,
 .clear-btn:focus-visible,
 .close-btn:focus-visible,
-.back-button:focus-visible {
-    outline: 3px solid var(--primary-light);
+.back-button:focus-visible,
+.pdf-nav-btn:focus-visible {
+    outline: 3px solid var(--neon-teal);
     outline-offset: 3px;
-    box-shadow: 0 0 0 6px rgba(102, 126, 234, 0.2);
+    box-shadow: 0 0 0 6px rgba(0, 206, 218, 0.3);
 }
 
 /* Print Styles */
