@@ -1228,6 +1228,21 @@ body::before {
         width: 95%;
         height: 95%;
     }
+
+    /* PDF Grid Tablet Styles */
+    .pdf-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        padding: 1.5rem;
+    }
+
+    .pdf-thumbnail {
+        height: 180px;
+    }
+
+    .pdf-thumbnail-icon {
+        font-size: 3.5rem;
+    }
 }
 
 /* Mobile Styles (480px and below) */
