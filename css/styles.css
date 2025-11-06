@@ -461,6 +461,167 @@ body::before {
     animation: slideInLeft 0.6s ease-out both;
 }
 
+/* PDF Grid Layout for Subject Pages */
+.pdf-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.pdf-card {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all var(--transition-normal);
+    animation: fadeInScale 0.6s ease-out both;
+    position: relative;
+}
+
+.pdf-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--primary-gradient);
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+    z-index: -1;
+}
+
+.pdf-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl), var(--neon-glow-teal);
+    border-color: var(--neon-teal);
+}
+
+.pdf-card:hover::before {
+    opacity: 0.1;
+}
+
+.pdf-thumbnail {
+    width: 100%;
+    height: 200px;
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.pdf-thumbnail-icon {
+    font-size: 4rem;
+    color: var(--neon-teal);
+    text-shadow: var(--neon-glow-teal);
+    animation: float 3s ease-in-out infinite;
+}
+
+.pdf-thumbnail::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, transparent, rgba(0, 206, 218, 0.1), transparent);
+    animation: shimmer 3s ease-in-out infinite;
+}
+
+.pdf-card-content {
+    padding: 1.5rem;
+}
+
+.pdf-card-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+
+.pdf-card-description {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+.pdf-card-actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.btn-view-card, .btn-download-card {
+    flex: 1;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    transition: all var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-view-card {
+    background: var(--primary-gradient);
+    color: white;
+}
+
+.btn-view-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
+}
+
+.btn-download-card {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    color: var(--text-primary);
+    border: 2px solid var(--glass-border);
+}
+
+.btn-download-card:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-light);
+}
+
+/* Subject Header Enhancement */
+.subject-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.subject-info .subject-icon {
+    font-size: 2rem;
+    margin-bottom: 0;
+}
+
+.pdf-count {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    color: var(--neon-yellow);
+    text-shadow: var(--neon-glow-yellow);
+}
+
 .pdf-item::before {
     content: '';
     position: absolute;
