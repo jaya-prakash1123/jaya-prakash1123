@@ -269,6 +269,164 @@ body::before {
     perspective: 1000px;
 }
 
+/* Enhanced Subject Card with Square Layout and Professional Animations */
+.subject-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--metallic-surface);
+    border: 2px solid var(--metallic-border);
+    border-radius: 24px;
+    padding: 2.5rem;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: all var(--transition-normal) cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--shadow-xl);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1; /* Makes it square */
+    height: 100%;
+    transform-style: preserve-3d;
+    animation: fadeInScale 0.8s ease-out both;
+}
+
+.subject-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--metallic-gradient);
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+    z-index: -1;
+}
+
+.subject-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+    transform: rotate(45deg);
+    transition: all var(--transition-slow);
+    opacity: 0;
+}
+
+.subject-card:hover {
+    transform: translateY(-12px) scale(1.05);
+    box-shadow: var(--shadow-xl), var(--shadow-glow);
+    border-color: var(--accent-color);
+    background: var(--metallic-light);
+}
+
+.subject-card:hover::before {
+    opacity: 0.9;
+}
+
+.subject-card:hover::after {
+    animation: shimmer 0.8s ease-out;
+}
+
+.subject-card:active {
+    transform: translateY(-6px) scale(1.02);
+}
+
+.subject-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.subject-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.subject-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.subject-card:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.subject-card .subject-icon {
+    font-size: 3.5rem;
+    margin-bottom: 0;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 4px 8px rgba(59, 130, 246, 0.3));
+    transition: all var(--transition-normal);
+    animation: float 4s ease-in-out infinite;
+}
+
+.subject-card:hover .subject-icon {
+    transform: scale(1.15);
+    filter: drop-shadow(0 8px 20px rgba(59, 130, 246, 0.5));
+}
+
+.subject-info {
+    flex: 1;
+    text-align: left;
+    margin-left: 2rem;
+}
+
+.subject-info h3 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+}
+
+.subject-info p {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+.subject-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    background: var(--glass-bg);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    border: 1px solid var(--glass-border);
+    backdrop-filter: var(--glass-blur);
+    transition: all var(--transition-normal);
+}
+
+.subject-card:hover .stat-item {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+}
+
+.subject-arrow {
+    margin-left: 1rem;
+    font-size: 1.5rem;
+    color: var(--text-muted);
+    transition: all var(--transition-normal);
+}
+
+.subject-card:hover .subject-arrow {
+    transform: translateX(4px);
+    color: var(--accent-color);
+}
+
 /* Enhanced Subject Button with Square Layout and Professional Animations */
 .subject-button {
     display: flex;
