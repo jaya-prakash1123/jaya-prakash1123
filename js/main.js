@@ -370,17 +370,99 @@ function renderSubjectPdfs(subjectName) {
     // Find PDFs for this subject
     const subjectPdfs = pdfData.filter(pdf => pdf.category === subjectName);
 
-    // Get the pdf-list container
+    // Check if we're on a subject page by looking for pdf-list container
     const pdfListContainer = document.querySelector('.pdf-list');
 
-    if (!pdfListContainer) return;
+    // If we're on a subject page, use grid layout
+    if (pdfListContainer) {
+        // Convert list container to grid layout for better visual presentation
+        pdfListContainer.className = 'pdf-grid';
+
+        // Clear existing content
+        pdfListContainer.innerHTML = '';
+
+        if (subjectPdfs.length === 0) {
+            // Show no PDFs message with animation
+            pdfListContainer.innerHTML = `
+                <div class="no-results" style="grid-column: 1 / -1;">
+                    <p>No PDFs available for ${subjectName} yet.</p>
+                </div>
+            `;
+            return;
+        }
+
+        // Add PDF cards with staggered animation
+        subjectPdfs.forEach((pdf, index) => {
+            setTimeout(() => {
+                const pdfCard = createPdfCard(pdf);
+                pdfListContainer.appendChild(pdfCard);
+            }, index * 100);
+        });
+        return;
+    }
+
+    // Fallback to list view for search results or other contexts
+    const searchResultsContainer = document.querySelector('.search-results');
+    if (searchResultsContainer) {
+        renderSubjectPdfsAsList(subjectPdfs, subjectName);
+    }
+}
+
+/**
+ * Create PDF card element for subject pages
+ */
+function createPdfCard(pdf) {
+    const pdfCard = document.createElement('div');
+    pdfCard.className = 'pdf-card';
+    pdfCard.style.animationDelay = `${Math.random() * 0.3}s`;
+
+    // Get subject info for icon
+    const subjectData = subjectInfo[pdf.category] || { icon: "📚", color: "#6b7280" };
+
+    // Create card content
+    pdfCard.innerHTML = `
+        <div class="pdf-thumbnail">
+            <div class="pdf-thumbnail-icon">${subjectData.icon}</div>
+        </div>
+        <div class="pdf-card-content">
+            <div class="pdf-card-title">${pdf.title}</div>
+            ${pdf.description && pdf.description.trim() !== '' ?
+                `<div class="pdf-card-description">${pdf.description}</div>` : ''}
+            <div class="pdf-card-actions">
+                <button class="btn-view-card" data-pdf-path="${pdf.path}">View</button>
+                <a href="${pdf.path}" download="${pdf.filename}" class="btn-download-card">Download</a>
+            </div>
+        </div>
+    `;
+
+    // Add event listeners
+    const viewBtn = pdfCard.querySelector('.btn-view-card');
+    viewBtn.addEventListener('click', () => openPdfModal(pdf.path));
+
+    // Add hover effects
+    pdfCard.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-8px)';
+    });
+
+    pdfCard.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0)';
+    });
+
+    return pdfCard;
+}
+
+/**
+ * Render PDFs as list (fallback for search results)
+ */
+function renderSubjectPdfsAsList(subjectPdfs, subjectName) {
+    const searchResultsContainer = document.querySelector('.search-results');
+    if (!searchResultsContainer) return;
 
     // Clear existing content
-    pdfListContainer.innerHTML = '';
+    searchResultsContainer.innerHTML = '';
 
     if (subjectPdfs.length === 0) {
-        // Show no PDFs message with animation
-        pdfListContainer.innerHTML = `
+        searchResultsContainer.innerHTML = `
             <div class="no-results">
                 <p>No PDFs available for ${subjectName} yet.</p>
             </div>
@@ -388,11 +470,18 @@ function renderSubjectPdfs(subjectName) {
         return;
     }
 
+    // Add category header
+    const categoryHeader = document.createElement('div');
+    categoryHeader.className = 'search-category';
+    categoryHeader.textContent = subjectName;
+    categoryHeader.style.animation = 'slideInLeft 0.4s ease-out both';
+    searchResultsContainer.appendChild(categoryHeader);
+
     // Add PDF items with staggered animation
     subjectPdfs.forEach((pdf, index) => {
         setTimeout(() => {
             const pdfItem = createEnhancedPdfElement(pdf);
-            pdfListContainer.appendChild(pdfItem);
+            searchResultsContainer.appendChild(pdfItem);
         }, index * 100);
     });
 }
