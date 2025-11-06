@@ -818,6 +818,98 @@ function onZoomOut() {
 }
 
 /**
+ * Generate subject page dynamically
+ */
+function generateSubjectPage(categoryName, subjectData) {
+    const fileName = `${categoryName.toLowerCase()}.html`;
+
+    // Check if file already exists (avoid regenerating)
+    if (localStorage.getItem(`page_generated_${fileName}`)) {
+        return;
+    }
+
+    // Find PDFs for this subject
+    const subjectPdfs = pdfData.filter(pdf => pdf.category === categoryName);
+
+    // Create HTML content for subject page
+    const subjectPageHTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${categoryName} - PDF Library</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Animated Particles Background -->
+    <div id="particles-container"></div>
+
+    <!-- Header -->
+    <header class="site-header">
+        <h1>${categoryName}</h1>
+        <p class="tagline">Educational PDFs and Study Materials</p>
+    </header>
+
+    <!-- Main Content -->
+    <main id="mainContent">
+        <!-- Subject Container -->
+        <div class="subject-container">
+            <div class="subject-header">
+                <a href="index.html" class="back-button">← Back to Library</a>
+                <h2 class="subject-title">${categoryName} Resources</h2>
+                <div class="subject-info">
+                    <span class="subject-icon">${subjectData.icon}</span>
+                    <span class="pdf-count">${subjectPdfs.length} PDF${subjectPdfs.length !== 1 ? 's' : ''}</span>
+                </div>
+            </div>
+
+            <div class="pdf-list" id="pdfList">
+                <!-- PDFs will be populated by JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <!-- PDF Modal Viewer -->
+    <div id="pdfModal" class="modal">
+        <div class="modal-content">
+            <button id="closeModal" class="close-btn" aria-label="Close modal">×</button>
+            <div class="pdf-controls">
+                <button id="prevPage" class="pdf-nav-btn" aria-label="Previous page">‹</button>
+                <span id="pageInfo" class="page-info">Page 1 of 1</span>
+                <button id="nextPage" class="pdf-nav-btn" aria-label="Next page">›</button>
+                <button id="zoomOut" class="pdf-nav-btn" aria-label="Zoom out">−</button>
+                <button id="zoomIn" class="pdf-nav-btn" aria-label="Zoom in">+</button>
+            </div>
+            <div id="pdfViewer" class="pdf-viewer-container"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <p>&copy; 2024 PDF Library. All rights reserved.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/page-turn.js@4.1.0/dist/page-turn.min.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>`;
+
+    // Store the HTML content for download (for manual creation)
+    localStorage.setItem(`subject_page_${fileName}`, subjectPageHTML);
+    localStorage.setItem(`page_generated_${fileName}`, 'true');
+
+    // Log the content for manual file creation
+    console.log(`Generated ${fileName} content. Copy from localStorage for manual file creation.`);
+    console.log(`Access via: localStorage.getItem('subject_page_${fileName}')`);
+}
+
+/**
  * Enhanced event listeners setup
  */
 function setupEventListeners() {
