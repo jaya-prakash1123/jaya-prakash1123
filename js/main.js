@@ -315,6 +315,9 @@ function createEnhancedSubjectButton(categoryName, pdfCount, index) {
         <div class="subject-glow"></div>
     `;
 
+    // Generate subject page if it doesn't exist
+    generateSubjectPage(categoryName, subjectData);
+
     // Add advanced hover effects
     addSubjectButtonEffects(subjectButton);
 
