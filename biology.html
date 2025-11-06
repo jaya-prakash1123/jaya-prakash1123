@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biology Study Materials - Professional PDF Viewer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="background-animation">
+        <div class="particles-container" id="particles-container"></div>
+    </div>
+
+    <!-- Loading State -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Loading Biology Materials...</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="loadingProgress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-book-open"></i>
+                <h1>Study Materials</h1>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="mathematics.html" class="nav-link">
+                    <i class="fas fa-calculator"></i>
+                    <span>Mathematics</span>
+                </a>
+                <a href="physics.html" class="nav-link">
+                    <i class="fas fa-atom"></i>
+                    <span>Physics</span>
+                </a>
+                <a href="chemistry.html" class="nav-link">
+                    <i class="fas fa-flask"></i>
+                    <span>Chemistry</span>
+                </a>
+                <a href="biology.html" class="nav-link active">
+                    <i class="fas fa-dna"></i>
+                    <span>Biology</span>
+                </a>
+                <a href="#" class="nav-link" id="aboutLink">
+                    <i class="fas fa-info-circle"></i>
+                    <span>About</span>
+                </a>
+            </nav>
+            <div class="header-actions">
+                <button class="btn-icon" id="themeToggle" title="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Subject Hero Section -->
+        <section class="subject-hero">
+            <div class="subject-hero-content">
+                <div class="subject-icon">🧬</div>
+                <h2 class="subject-hero-title">
+                    <span class="gradient-text">Biology Study Materials</span>
+                </h2>
+                <p class="subject-hero-subtitle">
+                    Explore comprehensive biology resources with advanced PDF viewing capabilities
+                </p>
+                <div class="subject-stats">
+                    <div class="stat">
+                        <div class="stat-number" id="biologyCount">0</div>
+                        <div class="stat-label">PDFs Available</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Free Access</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">HD</div>
+                        <div class="stat-label">Quality</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Search Section -->
+        <div class="search-section">
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="pdfSearchInput" placeholder="Search biology materials...">
+                    <button class="btn-clear" id="clearPdfSearch">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PDFs Grid -->
+        <div class="pdfs-grid" id="pdfsGrid">
+            <!-- PDFs will be dynamically inserted here -->
+        </div>
+
+        <!-- No Results Message -->
+        <div class="no-results" id="noResults" style="display: none;">
+            <div class="no-results-icon">
+                <i class="fas fa-search"></i>
+            </div>
+            <h3>No Biology Materials Found</h3>
+            <p>Try adjusting your search terms or browse all materials.</p>
+            <button class="btn-primary" id="viewAllBtn">View All Materials</button>
+        </div>
+    </main>
+
+    <!-- Advanced PDF Viewer Modal -->
+    <div class="pdf-modal" id="pdfModal">
+        <div class="pdf-modal-content">
+            <!-- PDF Viewer Header -->
+            <div class="pdf-viewer-header">
+                <div class="pdf-viewer-title" id="pdfTitle">Loading PDF...</div>
+                <div class="pdf-viewer-controls">
+                    <button class="pdf-control-btn" id="prevPageBtn" title="Previous Page">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="pdf-control-btn" id="nextPageBtn" title="Next Page">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <div class="pdf-zoom-display" id="pdfZoomDisplay">100%</div>
+                    <button class="pdf-control-btn" id="zoomOutBtn" title="Zoom Out">
+                        <i class="fas fa-search-minus"></i>
+                    </button>
+                    <button class="pdf-control-btn" id="zoomInBtn" title="Zoom In">
+                        <i class="fas fa-search-plus"></i>
+                    </button>
+                    <button class="pdf-control-btn" id="zoomResetBtn" title="Reset Zoom">
+                        <i class="fas fa-compress"></i>
+                    </button>
+                    <button class="pdf-control-btn" id="downloadPdfBtn" title="Download PDF">
+                        <i class="fas fa-download"></i>
+                    </button>
+                    <button class="pdf-control-btn" id="closePdfBtn" title="Close PDF">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- PDF Viewer Container -->
+            <div class="pdf-viewer-container">
+                <!-- Loading Overlay -->
+                <div class="pdf-loading-overlay" id="pdfLoadingOverlay">
+                    <div class="loading-spinner"></div>
+                    <div class="loading-text">Loading PDF...</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="pdfProgressFill"></div>
+                    </div>
+                    <div class="progress-text" id="pdfProgressText">0%</div>
+                </div>
+
+                <!-- PDF Canvas Container -->
+                <div class="pdf-canvas-container">
+                    <canvas id="pdfCanvas"></canvas>
+                </div>
+
+                <!-- PDF Sidebar -->
+                <div class="pdf-sidebar">
+                    <div class="pdf-sidebar-header">
+                        <h4>Pages</h4>
+                        <div class="pdf-page-info" id="pdfPageInfo">Page 0 of 0</div>
+                    </div>
+                    <div class="pdf-thumbnails" id="pdfThumbnails">
+                        <!-- Thumbnails will be dynamically inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <i class="fas fa-book-open"></i>
+                    <h3>Study Materials</h3>
+                </div>
+                <p>Your comprehensive library for educational resources with advanced PDF viewing.</p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Features</h4>
+                <ul>
+                    <li>Advanced PDF Viewer</li>
+                    <li>Dark Metallic Theme</li>
+                    <li>Mobile Optimized</li>
+                    <li>Professional Animations</li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Technologies</h4>
+                <ul>
+                    <li>PDF.js Integration</li>
+                    <li>Canvas Rendering</li>
+                    <li>Modern Animations</li>
+                    <li>Responsive Design</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 Study Materials Library. Built with passion for education.</p>
+        </div>
+    </footer>
+
+    <!-- About Modal -->
+    <div class="modal" id="aboutModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>About Study Materials Library</h3>
+                <button class="modal-close" id="closeAboutModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="about-content">
+                    <p>
+                        Welcome to the Study Materials Library - your comprehensive resource for educational PDFs across multiple subjects.
+                    </p>
+                    <p>
+                        Our platform provides easy access to high-quality study materials designed to support your learning journey.
+                        With our advanced PDF viewer, you can study directly in your browser without any downloads.
+                    </p>
+                    <h4>Features:</h4>
+                    <ul>
+                        <li>Advanced PDF viewer with canvas rendering</li>
+                        <li>Dark metallic theme for comfortable reading</li>
+                        <li>Mobile-optimized interface with touch gestures</li>
+                        <li>Download options for offline study</li>
+                        <li>Professional animations and micro-interactions</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Set PDF.js worker source
+        if (typeof pdfjsLib !== 'undefined') {
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        }
+    </script>
+</body>
+</html>
