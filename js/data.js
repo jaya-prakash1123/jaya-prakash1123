@@ -415,7 +415,7 @@ const pdfData = [
         title: "pygame",
         category: "Math",
         filename: "pygame.pdf",
-        path: "pdfs/Math/pygame.pdf",
+        path: "pdfs/mathematics/pygame.pdf",
         description: ""
     },
     {
