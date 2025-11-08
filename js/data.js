@@ -415,7 +415,7 @@ const pdfData = [
         title: "pygame",
         category: "Math",
         filename: "Application of integrals.pdf",
-        path: "pdfs/Math/Application of integrals.pdf",
+        path: "pdfs/Math/pygame.pdf",
         description: ""
     },
     {
