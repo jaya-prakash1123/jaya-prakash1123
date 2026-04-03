@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AppTrack - Job Application Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- AppBar -->
+    <header class="app-bar">
+        <div class="app-bar-content">
+            <h1 class="app-title">AppTrack</h1>
+            <div class="search-container">
+                <span class="material-icons-outlined search-icon">search</span>
+                <input type="text" id="searchInput" placeholder="Search company or position...">
+            </div>
+            <button class="btn btn-primary" id="addAppBtn">
+                <span class="material-icons-outlined">add</span>
+                <span class="btn-text">Add Application</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        
+        <!-- Stats Summary -->
+        <section class="stats-summary">
+            <div class="stat-card">
+                <span class="stat-value" id="statTotal">0</span>
+                <span class="stat-label">Total Applied</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value text-orange" id="statInProcess">0</span>
+                <span class="stat-label">In Process</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value text-teal" id="statOffers">0</span>
+                <span class="stat-label">Offers</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value text-red" id="statRejected">0</span>
+                <span class="stat-label">Rejected</span>
+            </div>
+        </section>
+
+        <!-- Filters & Sort -->
+        <section class="controls-bar">
+            <div class="filter-chips">
+                <button class="chip active" data-filter="All">All</button>
+                <button class="chip" data-filter="Applied">Applied</button>
+                <button class="chip" data-filter="In Process">In Process</button>
+                <button class="chip" data-filter="Interview">Interview</button>
+                <button class="chip" data-filter="Offer">Offer</button>
+                <button class="chip" data-filter="Confirmed">Confirmed</button>
+                <button class="chip" data-filter="Rejected">Rejected</button>
+            </div>
+            
+            <div class="sort-actions">
+                <div class="sort-dropdown">
+                    <span class="material-icons-outlined">sort</span>
+                    <select id="sortSelect">
+                        <option value="dateDesc">Date (Newest)</option>
+                        <option value="dateAsc">Date (Oldest)</option>
+                        <option value="company">Company</option>
+                        <option value="salary">Salary</option>
+                        <option value="rating">Rating</option>
+                    </select>
+                </div>
+                <button id="exportCsvBtn" class="btn btn-outlined">
+                    <span class="material-icons-outlined">download</span>
+                    <span class="btn-text">Export CSV</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Data View -->
+        <section class="data-view">
+            <!-- Table Wrapper for Desktop -->
+            <div class="table-container">
+                <table id="appTable">
+                    <thead>
+                        <tr>
+                            <th data-sort-col="company">Company <span class="material-icons-outlined sort-indicator"></span></th>
+                            <th data-sort-col="position">Position <span class="material-icons-outlined sort-indicator"></span></th>
+                            <th>Status</th>
+                            <th data-sort-col="date">Date Applied <span class="material-icons-outlined sort-indicator"></span></th>
+                            <th>Location</th>
+                            <th data-sort-col="salary">Salary <span class="material-icons-outlined sort-indicator"></span></th>
+                            <th data-sort-col="rating">Rating <span class="material-icons-outlined sort-indicator"></span></th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="appTableBody">
+                        <!-- Rows rendered via JS -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Cards Wrapper for Mobile -->
+            <div class="cards-container" id="appCardsContainer">
+                <!-- Cards rendered via JS -->
+            </div>
+            
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <span class="material-icons-outlined empty-icon">inbox</span>
+                <h3>No Applications Found</h3>
+                <p>Try adjusting your search or add a new application.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Dialog / Modal -->
+    <div class="dialog-backdrop" id="appDialog">
+        <div class="dialog-surface">
+            <div class="dialog-header">
+                <h2 id="dialogTitle">Add Application</h2>
+                <button class="icon-button dialog-close" id="dialogCloseBtn"><span class="material-icons-outlined">close</span></button>
+            </div>
+            <div class="dialog-content">
+                <form id="appForm">
+                    <input type="hidden" id="appId">
+                    
+                    <div class="form-row">
+                        <div class="form-group required">
+                            <label for="company">Company Name</label>
+                            <input type="text" id="company" required>
+                        </div>
+                        <div class="form-group required">
+                            <label for="position">Position Title</label>
+                            <input type="text" id="position" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <select id="status">
+                                <option value="Applied">Applied</option>
+                                <option value="In Process">In Process</option>
+                                <option value="Interview">Interview</option>
+                                <option value="Offer">Offer</option>
+                                <option value="Confirmed">Confirmed</option>
+                                <option value="Rejected">Rejected</option>
+                            </select>
+                        </div>
+                        <div class="form-group required">
+                            <label for="dateApplied">Date Applied</label>
+                            <input type="date" id="dateApplied" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="location">Location</label>
+                            <input type="text" id="location" placeholder="City or Remote">
+                        </div>
+                        <div class="form-group">
+                            <label for="salary">Expected Salary</label>
+                            <input type="text" id="salary" placeholder="$100k - $120k">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="experience">Years of Exp</label>
+                            <input type="number" id="experience" min="0" placeholder="e.g. 3">
+                        </div>
+                        <div class="form-group">
+                            <label for="referral">Referral</label>
+                            <input type="text" id="referral" placeholder="Name or 'None'">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group half-width">
+                            <label>Rating</label>
+                            <div class="rating-widget" id="ratingWidget">
+                                <span class="material-icons-outlined star" data-val="1">star_outline</span>
+                                <span class="material-icons-outlined star" data-val="2">star_outline</span>
+                                <span class="material-icons-outlined star" data-val="3">star_outline</span>
+                                <span class="material-icons-outlined star" data-val="4">star_outline</span>
+                                <span class="material-icons-outlined star" data-val="5">star_outline</span>
+                                <input type="hidden" id="rating" value="0">
+                            </div>
+                        </div>
+                        <div class="form-group full-width" style="margin-left: 16px;">
+                            <label for="jobLink">Job Link</label>
+                            <div class="input-with-button">
+                                <input type="url" id="jobLink" placeholder="https://...">
+                                <button type="button" class="btn btn-outlined small" id="testLinkBtn">Test</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="notes">Notes</label>
+                        <textarea id="notes" rows="3"></textarea>
+                    </div>
+
+                </form>
+            </div>
+            <div class="dialog-actions">
+                <button class="btn btn-text" id="dialogCancelBtn">Cancel</button>
+                <button class="btn btn-primary" id="dialogSaveBtn" form="appForm">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/store.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
