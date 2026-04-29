@@ -3,67 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Study Materials - PDF Library</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <title>A Message for You</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --bg-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            --text-main: #1f2937;
+            --text-sub: #6b7280;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            padding: 40px 30px;
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        h1 { color: var(--text-main); margin-bottom: 24px; font-size: 1.5rem; }
+        
+        .carousel { position: relative; overflow: hidden; margin: 20px 0; }
+        
+        .carousel-track {
+            display: flex;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card {
+            min-width: 100%;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .card h3 { color: var(--primary); font-size: 1.1rem; }
+        
+        .card p {
+            color: var(--text-sub);
+            line-height: 1.6;
+            font-size: 1rem;
+            text-align: left;
+        }
+        
+        .indicators { display: flex; justify-content: center; gap: 8px; margin-top: 20px; }
+        
+        .indicator {
+            width: 10px; height: 10px; border-radius: 50%;
+            background: #e5e7eb; cursor: pointer; transition: 0.3s;
+        }
+        
+        .indicator.active { background: var(--primary); transform: scale(1.2); }
+        
+        .swipe-hint { margin-top: 20px; color: #9ca3af; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    </style>
 </head>
 <body>
-    <!-- Animated Particles Background -->
-    <div id="particles-container"></div>
-    <!-- Header -->
-    <header class="site-header">
-        <h1>Study Materials Library</h1>
-        <p class="tagline">Access educational resources and study materials</p>
-    </header>
-
-    <!-- Search Bar -->
-    <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Search PDFs by title or category...">
-        <button id="clearSearch" class="clear-btn" aria-label="Clear search">×</button>
-    </div>
-
-    <!-- Main Content -->
-    <main id="mainContent">
-        <!-- Loading Skeleton (shown during initial load) -->
-        <div id="loadingSkeleton" class="loading-skeleton">
-            <div class="skeleton-grid">
-                <div class="skeleton-item skeleton"></div>
-                <div class="skeleton-item skeleton"></div>
-                <div class="skeleton-item skeleton"></div>
-                <div class="skeleton-item skeleton"></div>
+    <div class="container">
+        <h1>💬 A Message for You</h1>
+        <div class="carousel">
+            <div class="carousel-track" id="track">
+                <div class="card">
+                    <h3>Reflecting</h3>
+                    <p>I didn't expect this, but I want you to know I read every word — because it's worth more than what my reply might be.</p>
+                </div>
+                <div class="card">
+                    <h3>The Truth</h3>
+                    <p>I've thought about how to respond without being hurtful. It took me longer than enough, which is why I ignored the messages—not out of annoyance, but because you deserve more than thorns. The truth is, I don't feel the same way you do, and that isn't just toward you, but toward anyone right now. I'm just at a place in life where I'm focused on personal goals.</p>
+                </div>
+                <div class="card">
+                    <h3>Moving Forward</h3>
+                    <p>This changes nothing about how I treat you. I'm not going to be weird about it or make you feel awkward. You were brave, and that's something I respect. From now on, you can chat with me here—I won't ignore you. Also, regarding what happened with Arif and Kamran—I'm sorry. Your words were personal, and they deserved to stay that way.</p>
+                </div>
             </div>
         </div>
-
-        <!-- Subjects Grid (populated by JavaScript) -->
-        <div id="subjectsGrid" class="subjects-grid" style="display: none;"></div>
-
-        <!-- Search Results Container (hidden by default) -->
-        <div id="searchResults" class="search-results" style="display: none;"></div>
-
-        <!-- No Results Message (hidden by default) -->
-        <div id="noResults" class="no-results" style="display: none;">
-            <p>No results found. Try a different search term.</p>
+        <div class="indicators">
+            <div class="indicator active" data-index="0"></div>
+            <div class="indicator" data-index="1"></div>
+            <div class="indicator" data-index="2"></div>
         </div>
-    </main>
-
-    <!-- PDF Modal Viewer -->
-    <div id="pdfModal" class="modal">
-        <div class="modal-content">
-            <button id="closeModal" class="close-btn" aria-label="Close modal">×</button>
-            <iframe id="pdfViewer" title="PDF Viewer"></iframe>
-        </div>
+        <p class="swipe-hint">Swipe to continue</p>
     </div>
 
-    <!-- Footer -->
-    <footer class="site-footer">
-        <p>&copy; 2024 Study Materials Library. All rights reserved.</p>
-    </footer>
+    <script>
+        const track = document.getElementById('track');
+        const indicators = document.querySelectorAll('.indicator');
+        let currentIndex = 0;
+        let startX = 0;
 
-    <!-- Scripts -->
-    <script src="js/pdf.min.js"></script>
-    <script src="js/pdf.worker.min.js"></script>
-    <script src="js/main.js"></script>
+        function updateCarousel(index) {
+            currentIndex = index;
+            track.style.transform = `translateX(-${currentIndex * 100}%)`;
+            indicators.forEach((ind, i) => ind.classList.toggle('active', i === currentIndex));
+        }
+
+        indicators.forEach(ind => ind.addEventListener('click', () => updateCarousel(parseInt(ind.dataset.index))));
+
+        track.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+        track.addEventListener('touchend', e => {
+            const diff = e.changedTouches[0].clientX - startX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0 && currentIndex > 0) updateCarousel(currentIndex - 1);
+                else if (diff < 0 && currentIndex < 2) updateCarousel(currentIndex + 1);
+            }
+        });
+    </script>
 </body>
 </html>
